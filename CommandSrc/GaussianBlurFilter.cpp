@@ -1,0 +1,51 @@
+#include "opencv2/imgproc.hpp"
+#include "VCVData.h"
+#include "CommandInclude/GaussianBlurFilter.h"
+
+GaussianBlurFilter::GaussianBlurFilter()
+{
+	//initialization = false;
+}
+
+GaussianBlurFilter::~GaussianBlurFilter()
+{
+
+}
+
+bool GaussianBlurFilter::SetParameter(const CommandParameter &para)
+{
+	if((para.size.width%2==0)||(para.size.height%2==0))
+		return false;
+
+	size = para.size;
+	sigma_x = para.sigmacolor;
+	sigma_y = para.sigmaspace;
+	border_type = para.bordertype;
+
+	return true;
+}
+
+void GaussianBlurFilter::undo()
+{
+	if(!initialization)
+		return;
+
+	connection_data->SetDisplayImage(original_image);
+}
+
+void GaussianBlurFilter::redo()
+{
+	if(!initialization)
+		return;
+
+	final_image.release();
+	final_image.create(original_image.rows,original_image.cols,original_image.type());
+	GaussianBlur(original_image,final_image,size,sigma_x,sigma_y,border_type);
+
+	connection_data->SetDisplayImage(final_image);
+}
+
+
+
+
+
