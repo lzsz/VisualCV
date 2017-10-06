@@ -11,12 +11,12 @@ using namespace std;
 
 class QRadioButton;
 
-class QControlPlan : public QWidget
+class QFilterPanel : public QWidget
 {
 	Q_OBJECT
 public:
-    explicit QControlPlan();
-    ~QControlPlan();
+    explicit QFilterPanel();
+    ~QFilterPanel();
 
     double GetSigmaColor();
     double GetSigmaSpace();
@@ -41,8 +41,8 @@ protected slots:
 
 signals:
 	void ParameterChange(const CommandParameter &para);
-	void ControlPlanOk(const CommandParameter &para);
-	void ControlPlanCancel(const CommandParameter &para);
+    void FilterPanelOk(const CommandParameter &para);
+    void FilterPanelCancel(const CommandParameter &para);
 
 private:
     Ui_ControlPlan ui;

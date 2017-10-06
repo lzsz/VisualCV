@@ -1,9 +1,9 @@
 #include <QRadioButton>
 #include "CommandInclude/BlurFilter.h"
 
-#include "ControlPlan.h"
+#include "FilterPanel.h"
 
-QControlPlan::QControlPlan()
+QFilterPanel::QFilterPanel()
 {
     ui.setupUi(this);
 	CreateBorderType();
@@ -28,52 +28,52 @@ QControlPlan::QControlPlan()
 	connect(ui.pb_Cancel,SIGNAL(clicked(bool)),this,SLOT(PushCancel()));
 }
 
-QControlPlan::~QControlPlan()
+QFilterPanel::~QFilterPanel()
 {
 
 }
 
-double QControlPlan::GetSigmaColor()
+double QFilterPanel::GetSigmaColor()
 {
     return ui.dsp_sigmacolor->value();
 }
 
-double QControlPlan::GetSigmaSpace()
+double QFilterPanel::GetSigmaSpace()
 {
     return ui.dsp_sigmaspace->value();
 }
 
-double QControlPlan::GetScale()
+double QFilterPanel::GetScale()
 {
     return ui.dsp_scale->value();
 }
 
-double QControlPlan::GetDelta()
+double QFilterPanel::GetDelta()
 {
     return ui.dsp_delta->value();
 }
 
-Size QControlPlan::GetSize()
+Size QFilterPanel::GetSize()
 {
     return Size(ui.sp_width->value(),ui.sp_height->value());
 }
 
-Point QControlPlan::GetPoint()
+Point QFilterPanel::GetPoint()
 {
     return Point(ui.sp_x->value(),ui.sp_y->value());
 }
 
-int QControlPlan::GetIterations()
+int QFilterPanel::GetIterations()
 {
     return ui.sp_iterations->value();
 }
 
-int QControlPlan::GetKSize()
+int QFilterPanel::GetKSize()
 {
     return ui.sp_ksize->value();
 }
 
-int QControlPlan::GetBorderType()
+int QFilterPanel::GetBorderType()
 {
 	return BORDER_DEFAULT;	//temp
 
@@ -107,7 +107,7 @@ int QControlPlan::GetBorderType()
 	return BORDER_DEFAULT;
 }
 
-void QControlPlan::BeginOperation(VCV_IMAGE_OPERATION operation)
+void QFilterPanel::BeginOperation(VCV_IMAGE_OPERATION operation)
 {
 	switch(operation)
 	{
@@ -140,7 +140,7 @@ void QControlPlan::BeginOperation(VCV_IMAGE_OPERATION operation)
 	}
 }
 
-void QControlPlan::EndOperation(VCV_IMAGE_OPERATION operation)
+void QFilterPanel::EndOperation(VCV_IMAGE_OPERATION operation)
 {
 	switch(operation)
 	{
@@ -169,32 +169,32 @@ void QControlPlan::EndOperation(VCV_IMAGE_OPERATION operation)
 	image_operation = IMAGE_NONE;
 }
 
-void QControlPlan::ValueChange()
+void QFilterPanel::ValueChange()
 {
 	GetAllParameter();
 
 	emit ParameterChange(command_para);
 }
 
-void QControlPlan::PushOk()
+void QFilterPanel::PushOk()
 {
 	EndOperation(image_operation);
 
 	GetAllParameter();
 
-	emit ControlPlanOk(command_para);
+    emit FilterPanelOk(command_para);
 }
 
-void QControlPlan::PushCancel()
+void QFilterPanel::PushCancel()
 {
 	EndOperation(image_operation);
 
 	GetAllParameter();
 
-	emit ControlPlanCancel(command_para);
+    emit FilterPanelCancel(command_para);
 }
 
-void QControlPlan::CreateBorderType()
+void QFilterPanel::CreateBorderType()
 {
 	rb_default = new QRadioButton(tr("BORDER_DEFAULT"));
 	rb_wrap = new QRadioButton(tr("BORDER_WRAP"));
@@ -221,7 +221,7 @@ void QControlPlan::CreateBorderType()
 
 }
 
-void QControlPlan::GetAllParameter()
+void QFilterPanel::GetAllParameter()
 {
 	command_para.delta = GetDelta();
 	command_para.iterations =GetIterations();
@@ -234,7 +234,7 @@ void QControlPlan::GetAllParameter()
 	command_para.bordertype = GetBorderType();
 }
 
-void QControlPlan::Disable()
+void QFilterPanel::Disable()
 {
 	ui.dsp_delta->setEnabled(false);
 	ui.dsp_scale->setEnabled(false);
@@ -253,7 +253,7 @@ void QControlPlan::Disable()
 	ui.pb_Cancel->setEnabled(false);
 }
 
-void QControlPlan::EnableBlur()
+void QFilterPanel::EnableBlur()
 {
 	Disable();
 
@@ -277,7 +277,7 @@ void QControlPlan::EnableBlur()
 	connect(ui.sp_height,SIGNAL(valueChanged(int)),ui.sp_width,SLOT(setValue(int)));
 }
 
-void QControlPlan::DisableBlur()
+void QFilterPanel::DisableBlur()
 {
 	Disable();
 
@@ -285,7 +285,7 @@ void QControlPlan::DisableBlur()
 	disconnect(ui.sp_height,SIGNAL(valueChanged(int)),ui.sp_width,SLOT(setValue(int)));
 }
 
-void QControlPlan::EnableGaussianBlur()
+void QFilterPanel::EnableGaussianBlur()
 {
 	Disable();
 
@@ -307,14 +307,14 @@ void QControlPlan::EnableGaussianBlur()
 	ui.sp_height->setSingleStep(2);
 }
 
-void QControlPlan::DisableGaussianBlur()
+void QFilterPanel::DisableGaussianBlur()
 {
 	ui.sp_width->setSingleStep(1);
 	ui.sp_height->setSingleStep(1);
 	Disable();
 }
 
-void QControlPlan::EnableMedianBlur()
+void QFilterPanel::EnableMedianBlur()
 {
 	Disable();
 	ui.sp_ksize->setEnabled(true);
@@ -325,14 +325,14 @@ void QControlPlan::EnableMedianBlur()
 	ui.sp_ksize->setSingleStep(2);
 }
 
-void QControlPlan::DisableMedianBlur()
+void QFilterPanel::DisableMedianBlur()
 {
 	ui.sp_ksize->setMinimum(0);
 	ui.sp_ksize->setSingleStep(1);
 	Disable();
 }
 
-void QControlPlan::EnableBilateral()
+void QFilterPanel::EnableBilateral()
 {
 	Disable();
 	ui.dsp_sigmacolor->setEnabled(true);
@@ -342,12 +342,12 @@ void QControlPlan::EnableBilateral()
 	ui.pb_Cancel->setEnabled(true);
 }
 
-void QControlPlan::DisableBilateral()
+void QFilterPanel::DisableBilateral()
 {
 	Disable();
 }
 
-void QControlPlan::EnableErosion()
+void QFilterPanel::EnableErosion()
 {
 	Disable();
 	ui.sp_x->setEnabled(true);
@@ -361,7 +361,7 @@ void QControlPlan::EnableErosion()
 	ui.sp_iterations->setSingleStep(2);
 }
 
-void QControlPlan::DisableErosion()
+void QFilterPanel::DisableErosion()
 {
 	Disable();
 }

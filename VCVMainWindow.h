@@ -10,7 +10,7 @@ class QMdiArea;
 class QSplitter;
 class QVCVData;
 class QTabWidget;
-class QControlPlan;
+class QFilterPanel;
 class QDockWidget;
 class QMdiSubWindow;
 class QCustomFilterDlg;
@@ -49,8 +49,8 @@ private slots:
 	void NormalSize();
 
 	void ParameterChangeRespond(const CommandParameter &para);
-	void ControlPlanOk(const CommandParameter &para);
-	void ControlPlanCancel(const CommandParameter &para);
+    void FilterPanelOk(const CommandParameter &para);
+    void FilterPanelCancel(const CommandParameter &para);
 
 private:
 	QMenu *file_menu;
@@ -83,7 +83,7 @@ private:
 
 	QTabWidget *tabwidget;
     QDockWidget *dockwidget;
-    QControlPlan *controlplan;
+    QFilterPanel *filterpanel;
 	QCommandBuilder *command_builder;
 	QVCVUndoCommand *current_command;
 
@@ -94,7 +94,7 @@ private:
 	void InitUI();
 	void CreateAction();
 	void CreateMenu();
-    void CreateControlPlan();
+    void CreateControlPanel();
 	void CreateConnection();
 
 	void DoOperation(VCV_IMAGE_OPERATION operation);

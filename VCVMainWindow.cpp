@@ -15,7 +15,7 @@
 #include "VCVDataModel.h"
 #include "DataModelInstance.h"
 #include "VCVChildWindow.h"
-#include "ControlPlan.h"
+#include "FilterPanel.h"
 #include "CustomFilterDlg.h"
 #include "NewDialog.h"
 
@@ -54,7 +54,7 @@ void QVCVMainWindow::InitUI()
 {
 	CreateAction();
 	CreateMenu();
-    CreateControlPlan();
+    CreateControlPanel();
 
 	QLabel *label1 = new QLabel(tr("OK"));
 	statusBar()->addWidget(label1);
@@ -114,15 +114,15 @@ void QVCVMainWindow::CreateMenu()
 	filter_menu->addAction(filter_dilation);
 }
 
-void QVCVMainWindow::CreateControlPlan()
+void QVCVMainWindow::CreateControlPanel()
 {
-	tabwidget = new QTabWidget;
-    dockwidget = new QDockWidget;
-    controlplan = new QControlPlan;
-	tabwidget->addTab(controlplan,tr("Filter"));
-    dockwidget->setWidget(tabwidget);
-    dockwidget->setFeatures(QDockWidget::AllDockWidgetFeatures);
-    addDockWidget(Qt::BottomDockWidgetArea,dockwidget);
+//	tabwidget = new QTabWidget;
+//    dockwidget = new QDockWidget;
+    filterpanel = new QFilterPanel;
+//    tabwidget->addTab(filterpanel,tr("Filter"));
+//    dockwidget->setWidget(tabwidget);
+//    dockwidget->setFeatures(QDockWidget::AllDockWidgetFeatures);
+//    addDockWidget(Qt::BottomDockWidgetArea,dockwidget);
 }
 
 void QVCVMainWindow::WindowActive(QMdiSubWindow *subwin)
@@ -191,6 +191,8 @@ void QVCVMainWindow::Saveas()
 
 void QVCVMainWindow::BlurFilter()
 {
+    if(filterpanel!=NULL)
+        filterpanel->show();
 	DoOperation(IMAGE_FILTER_BLUR);
 }
 
@@ -294,10 +296,10 @@ void QVCVMainWindow::ParameterChangeRespond(const CommandParameter &para)
 	current_command->redo();
 }
 
-void QVCVMainWindow::ControlPlanOk(const CommandParameter &para)
+void QVCVMainWindow::FilterPanelOk(const CommandParameter &para)
 {
-	mdi_area->setEnabled(true);
-	menuBar()->setEnabled(true);
+//	mdi_area->setEnabled(true);
+//	menuBar()->setEnabled(true);
 
 	if(current_command==NULL)
 		return;
@@ -318,7 +320,7 @@ void QVCVMainWindow::ControlPlanOk(const CommandParameter &para)
 	operation_data = NULL;
 }
 
-void QVCVMainWindow::ControlPlanCancel(const CommandParameter &para)
+void QVCVMainWindow::FilterPanelCancel(const CommandParameter &para)
 {
 	mdi_area->setEnabled(true);
 	menuBar()->setEnabled(true);
@@ -333,8 +335,8 @@ void QVCVMainWindow::ControlPlanCancel(const CommandParameter &para)
 	delete current_command;
 	current_command = NULL;
 
-	mdi_area->setEnabled(true);
-	menuBar()->setEnabled(true);
+//	mdi_area->setEnabled(true);
+//	menuBar()->setEnabled(true);
 }
 
 
@@ -353,12 +355,12 @@ void QVCVMainWindow::DoOperation(VCV_IMAGE_OPERATION operation)
 	if(operation_data==NULL)
 		return;
 
-	controlplan->BeginOperation(image_operation);
+    filterpanel->BeginOperation(image_operation);
 
 	current_command = command_builder->CreateCommand(image_operation);
 
-	mdi_area->setEnabled(false);
-	menuBar()->setEnabled(false);
+    //mdi_area->setEnabled(false);
+    //menuBar()->setEnabled(false);
 }
 
 void QVCVMainWindow::CreateConnection()
@@ -369,9 +371,9 @@ void QVCVMainWindow::CreateConnection()
 
 
 	connect(mdi_area,SIGNAL(subWindowActivated(QMdiSubWindow*)),this,SLOT(WindowActive(QMdiSubWindow*)));
-	connect(controlplan,SIGNAL(ParameterChange(const CommandParameter&)),this,SLOT(ParameterChangeRespond(const CommandParameter&)));
-	connect(controlplan,SIGNAL(ControlPlanOk(const CommandParameter&)),this,SLOT(ControlPlanOk(const CommandParameter&)));
-	connect(controlplan,SIGNAL(ControlPlanCancel(const CommandParameter &)),this,SLOT(ControlPlanCancel(const CommandParameter &)));
+    connect(filterpanel,SIGNAL(ParameterChange(const CommandParameter&)),this,SLOT(ParameterChangeRespond(const CommandParameter&)));
+    connect(filterpanel,SIGNAL(FilterPanelOk(const CommandParameter&)),this,SLOT(FilterPanelOk(const CommandParameter&)));
+    connect(filterpanel,SIGNAL(FilterPanelCancel(const CommandParameter &)),this,SLOT(FilterPanelCancel(const CommandParameter &)));
 
 	connect(filter_blur,SIGNAL(triggered()),this,SLOT(BlurFilter()));
 	connect(filter_gaussian,SIGNAL(triggered()),this,SLOT(GaussianBlurFilter()));
