@@ -80,8 +80,8 @@ void QVCVMainWindow::CreateAction()
 	filter_median = new QAction(tr("MedianBlur"),this);
 	filter_bilateral = new QAction(tr("Bilateral"),this);
 	filter_custom2d = new QAction(tr("CustomFilter2D"),this);
-	filter_erosion = new QAction(tr("Erosion"),this);
-	filter_dilation = new QAction(tr("Dilation"),this);
+    morphological_erosion = new QAction(tr("Erosion"),this);
+    morphological_dilation = new QAction(tr("Dilation"),this);
 }
 
 void QVCVMainWindow::CreateMenu()
@@ -90,9 +90,10 @@ void QVCVMainWindow::CreateMenu()
 	edit_menu = menuBar()->addMenu(tr("&Edit"));
 	view_menu = menuBar()->addMenu(tr("&View"));
 	filter_menu =  menuBar()->addMenu(tr("&Filter"));
+    morphological_menu = menuBar()->addMenu(tr("Morphological"));
 	help_menu = menuBar()->addMenu(tr("&Help"));
 
-	file_menu->addAction(file_menu_new);
+    file_menu->addAction(file_menu_new);
 	file_menu->addAction(file_menu_open);
 	file_menu->addAction(file_menu_save);
 	file_menu->addAction(file_menu_saveas);
@@ -109,9 +110,8 @@ void QVCVMainWindow::CreateMenu()
 	filter_menu->addAction(filter_median);
 	filter_menu->addAction(filter_bilateral);
 	filter_menu->addAction(filter_custom2d);
-	filter_menu->addSeparator();
-	filter_menu->addAction(filter_erosion);
-	filter_menu->addAction(filter_dilation);
+    morphological_menu->addAction(morphological_erosion);
+    morphological_menu->addAction(morphological_dilation);
 }
 
 void QVCVMainWindow::CreateControlPanel()
@@ -198,21 +198,29 @@ void QVCVMainWindow::BlurFilter()
 
 void QVCVMainWindow::GaussianBlurFilter()
 {
+    if(filterpanel!=NULL)
+        filterpanel->show();
 	DoOperation(IMAGE_FILTER_GAUSSIANBLUR);
 }
 
 void QVCVMainWindow::MedianBlurFilter()
 {
-	DoOperation(IMAGE_FILTER_MEDIANBLUR);
+    if(filterpanel!=NULL)
+        filterpanel->show();
+    DoOperation(IMAGE_FILTER_MEDIANBLUR);
 }
 
 void QVCVMainWindow::BilateralFilter()
 {
-	DoOperation(IMAGE_FILTER_BILATERAL);
+    if(filterpanel!=NULL)
+        filterpanel->show();
+    DoOperation(IMAGE_FILTER_BILATERAL);
 }
 
 void QVCVMainWindow::CustomFilter2D()
 {
+    if(filterpanel!=NULL)
+        filterpanel->show();
 	if(mdi_area->activeSubWindow()==NULL)
 		return;
 
@@ -249,11 +257,15 @@ void QVCVMainWindow::CustomFilter2D()
 
 void QVCVMainWindow::Erosion()
 {
+    if(filterpanel!=NULL)
+        filterpanel->show();
 	DoOperation(IMAGE_FILTER_EROSION);
 }
 
 void QVCVMainWindow::Dilation()
 {
+    if(filterpanel!=NULL)
+        filterpanel->show();
 	DoOperation(IMAGE_FILTER_DILATION);
 }
 
@@ -380,8 +392,8 @@ void QVCVMainWindow::CreateConnection()
 	connect(filter_median,SIGNAL(triggered()),this,SLOT(MedianBlurFilter()));
 	connect(filter_bilateral,SIGNAL(triggered()),this,SLOT(BilateralFilter()));
 	connect(filter_custom2d,SIGNAL(triggered()),this,SLOT(CustomFilter2D()));
-	connect(filter_erosion,SIGNAL(triggered()),this,SLOT(Erosion()));
-	connect(filter_dilation,SIGNAL(triggered()),this,SLOT(Dilation()));
+    connect(morphological_erosion,SIGNAL(triggered()),this,SLOT(Erosion()));
+    connect(morphological_dilation,SIGNAL(triggered()),this,SLOT(Dilation()));
 
 	connect(view_zoomin,SIGNAL(triggered()),this,SLOT(ZoomIn()));
 	connect(view_zoomout,SIGNAL(triggered()),this,SLOT(ZoomOut()));

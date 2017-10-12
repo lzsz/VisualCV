@@ -59,6 +59,7 @@ private:
 	QMenu *help_menu;
 
 	QMenu *filter_menu;
+    QMenu *morphological_menu;
 
 	QAction *file_menu_new;
 	QAction *file_menu_open;
@@ -76,8 +77,8 @@ private:
 	QAction *filter_median;
 	QAction *filter_bilateral;
 	QAction *filter_custom2d;
-	QAction *filter_erosion;
-	QAction *filter_dilation;
+    QAction *morphological_erosion;
+    QAction *morphological_dilation;
 
 	QMdiArea *mdi_area;
 
