@@ -1,5 +1,5 @@
 #include "opencv2/imgproc.hpp"
-#include "utility.h"
+#include "Utility.h"
 
 QImage* MatToQImage(const Mat &mat)
 {

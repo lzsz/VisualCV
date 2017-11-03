@@ -4,7 +4,7 @@
 
 #include "VCVDataModel.h"
 #include "DataModelInstance.h"
-#include "VCVChildwindow.h"
+#include "VCVChildWindow.h"
 
 QVCVChildWindow::QVCVChildWindow(QWidget *parent, Qt::WindowFlags f)
 	:QWidget(parent,f)

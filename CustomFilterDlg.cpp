@@ -5,7 +5,7 @@
 #include <QAbstractItemModel>
 #include <QModelIndex>
 #include "opencv2/imgproc.hpp"
-#include "utility.h"
+#include "Utility.h"
 #include "CustomFilterDlg.h"
 
 QCustomFilterDlg::QCustomFilterDlg()

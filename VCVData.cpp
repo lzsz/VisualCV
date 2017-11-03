@@ -1,4 +1,3 @@
-#include <io.h>
 #include <QUndoStack>
 #include <QAction>
 #include "opencv2/highgui.hpp"

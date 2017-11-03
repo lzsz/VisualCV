@@ -36,10 +36,10 @@ void QDilation::redo()
 	if(!initialization)
 		return;
 
-	if(anchor.x>=connection_data->width())
-		anchor.x = connection_data->width()-1;
-	if(anchor.y>=connection_data->height())
-		anchor.y = connection_data->height()-1;
+    if(anchor.x>=iterations)
+        anchor.x = iterations-1;
+    if(anchor.y>=iterations)
+        anchor.y = iterations-1;
 
 	final_image.release();
 	final_image.create(original_image.rows,original_image.cols,original_image.type());
