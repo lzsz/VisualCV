@@ -1,7 +1,7 @@
 #include <QImage>
 #include <QPainter>
 #include <QScrollBar>
-
+#include "FilterPanel.h"
 #include "VCVDataModel.h"
 #include "DataModelInstance.h"
 #include "VCVChildWindow.h"
@@ -18,16 +18,21 @@ QVCVChildWindow::QVCVChildWindow(QWidget *parent, Qt::WindowFlags f)
 
     display_scale = 1.0;
 
+    filter_panel = Q_NULLPTR;
+
 	connect(v_scrollbar,SIGNAL(valueChanged(int)),this,SLOT(repaint()));
 	connect(h_scrollbar,SIGNAL(valueChanged(int)),this,SLOT(repaint()));
-	//connect(v_scrollbar,SIGNAL(	rangeChanged ( int,int)),this,SLOT(VScrollBarRangeChanged(int,int)));
-	//connect(h_scrollbar,SIGNAL(	rangeChanged ( int,int)),this,SLOT(HScrollBarRangeChanged(int,int)));
 }
 
 QVCVChildWindow::~QVCVChildWindow()
 {
 	if(update_image!=NULL)
 		delete update_image;
+    if(filter_panel!=Q_NULLPTR)
+    {
+        delete filter_panel;
+        filter_panel = Q_NULLPTR;
+    }
 }
 
 ////////////////////////
@@ -61,11 +66,29 @@ float QVCVChildWindow::GetDisplayScale()
 {
 	return display_scale;
 }
+
+QFilterPanel* QVCVChildWindow::GetFilterPanel()
+{
+    return filter_panel;
+}
+
+void QVCVChildWindow::SetFilterPanel(QFilterPanel *panel)
+{
+    if(panel==NULL)
+        return ;
+
+    if(filter_panel!=NULL)
+    {
+        filter_panel->close();
+        delete filter_panel;
+        filter_panel = NULL;
+    }
+    filter_panel = panel;
+}
 /////////////////////
 //slot function
 void QVCVChildWindow::VScrollBarRangeChanged(int min, int max)
 {
-
     if (max - min == 0)
         v_scrollbar->hide();
     else

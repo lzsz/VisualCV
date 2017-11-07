@@ -12,15 +12,19 @@ QBilateralFilter::~QBilateralFilter()
 
 }
 
-bool QBilateralFilter::SetParameter(const CommandParameter &para)
+bool QBilateralFilter::SetParameter(const CommandParameter *para)
 {
-	if((para.sigmacolor<0)||(para.sigmaspace<0)||(para.ksize<0))
+    if(para==NULL)
+        return false;
+
+    CommandParameter_Filter *filter_para = (CommandParameter_Filter*)para;
+    if((filter_para->sigmacolor<0)||(filter_para->sigmaspace<0)||(filter_para->ksize<0))
 		return false;
 
-	sigma_color = para.sigmacolor;
-	sigma_space = para.sigmaspace;
-	d = para.ksize;
-	border_type = para.bordertype;
+    sigma_color = filter_para->sigmacolor;
+    sigma_space = filter_para->sigmaspace;
+    d = filter_para->ksize;
+    border_type = filter_para->bordertype;
 
 	return true;
 }

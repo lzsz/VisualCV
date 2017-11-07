@@ -12,8 +12,8 @@ public:
 	QVCVUndoCommand();
 	~QVCVUndoCommand();
 
-	virtual bool Initialize(QVCVData *data, const CommandParameter &para)=0;
-	virtual bool SetParameter(const CommandParameter &para);
+    virtual bool Initialize(QVCVData *data, const CommandParameter *para)=0;
+    virtual bool SetParameter(const CommandParameter *para);
 	bool IsInit();
 
 protected:

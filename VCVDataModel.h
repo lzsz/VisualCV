@@ -5,7 +5,6 @@
 #include <vector>
 
 class QVCVData;
-
 using namespace std;
 
 class QVCVDataModel : public QObject

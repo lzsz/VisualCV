@@ -44,12 +44,6 @@ bool QVCVData::New(int width,int height,int type, int resolution,const Scalar& s
 	original_image.create(height,width,type);
 	//original_imag
 
-
-
-	return true;
-	
-
-	return true;
 }
 
 bool QVCVData::Load(const QString &file_name)

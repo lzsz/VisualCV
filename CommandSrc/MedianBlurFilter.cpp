@@ -12,12 +12,16 @@ QMedianBlurFilter::~QMedianBlurFilter()
 
 }
 
-bool QMedianBlurFilter::SetParameter(const CommandParameter &para)
+bool QMedianBlurFilter::SetParameter(const CommandParameter *para)
 {
-	if(para.ksize%2!=1)
+    if(para==NULL)
+        return false;
+    CommandParameter_Filter *filter_para = (CommandParameter_Filter*)para;
+
+    if(filter_para->ksize%2!=1)
 		return false;
 
-	ksize = para.ksize;
+    ksize = filter_para->ksize;
     return true;
 }
 

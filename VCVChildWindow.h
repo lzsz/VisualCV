@@ -6,6 +6,7 @@
 class QMenu;
 class QAction;
 class QScrollBar;
+class QFilterPanel;
 
 #define SCROLLBAR_SIZE 20
 
@@ -23,6 +24,8 @@ public:
 	void SetDisplayScale(float scale);
 	float GetDisplayScale();
 
+    QFilterPanel* GetFilterPanel();
+    void SetFilterPanel(QFilterPanel *panel);
 protected slots:
 	void VScrollBarRangeChanged(int min, int max);
 	void HScrollBarRangeChanged(int min, int max);
@@ -38,17 +41,18 @@ protected:
 	QScrollBar *h_scrollbar;
 	QScrollBar *v_scrollbar;
 
-	void AdjustScrollBar();
-	void AdjustScrollBarRange();
+    QFilterPanel *filter_panel;
 
-protected:
 	int image_top;
 	int image_left;
 	QRect image_display_area;
 	QRect widget_display_area;
 	float display_scale;
 
-	void DrawClient();
+    void AdjustScrollBar();
+    void AdjustScrollBarRange();
+
+    void DrawClient();
 };
 
 #endif

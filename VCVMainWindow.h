@@ -48,9 +48,9 @@ private slots:
 	void ZoomOut();
 	void NormalSize();
 
-	void ParameterChangeRespond(const CommandParameter &para);
-    void FilterPanelOk(const CommandParameter &para);
-    void FilterPanelCancel(const CommandParameter &para);
+	void ParameterChangeRespond(const CommandParameter *para);
+    void FilterPanelOk(const CommandParameter *para);
+    void FilterPanelCancel(const CommandParameter *para);
 
 private:
 	QMenu *file_menu;

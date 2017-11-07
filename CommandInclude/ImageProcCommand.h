@@ -12,8 +12,8 @@ public:
 	QImageProcCommand();
 	~QImageProcCommand();
 
-	bool Initialize(QVCVData *data, const CommandParameter &para);
-	virtual bool SetParameter(const CommandParameter &para);
+    bool Initialize(QVCVData *data, const CommandParameter* para);
+    virtual bool SetParameter(const CommandParameter *para);
 
 protected:
     Mat original_image;

@@ -12,7 +12,7 @@ QImageProcCommand::~QImageProcCommand()
 	final_image.release();
 }
 
-bool QImageProcCommand::Initialize(QVCVData *data, const CommandParameter &para)
+bool QImageProcCommand::Initialize(QVCVData *data, const CommandParameter *para)
 {
     if(data==NULL)
 		return false;
@@ -36,7 +36,7 @@ bool QImageProcCommand::Initialize(QVCVData *data, const CommandParameter &para)
 	return initialization;
 }
 
-bool QImageProcCommand::SetParameter(const CommandParameter &para)
+bool QImageProcCommand::SetParameter(const CommandParameter *para)
 {
 	return false;
 }

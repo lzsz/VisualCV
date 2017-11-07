@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-#include "ui_ControlPlan.h"
+#include "ui_FilterPanel.h"
 #include "SystemDefine.h"
 
 
@@ -15,7 +15,7 @@ class QFilterPanel : public QWidget
 {
 	Q_OBJECT
 public:
-    explicit QFilterPanel();
+    explicit QFilterPanel(QWidget *parent = Q_NULLPTR, Qt::WindowFlags f = Qt::WindowFlags());
     ~QFilterPanel();
 
     double GetSigmaColor();
@@ -40,12 +40,12 @@ protected slots:
 
 
 signals:
-	void ParameterChange(const CommandParameter &para);
-    void FilterPanelOk(const CommandParameter &para);
-    void FilterPanelCancel(const CommandParameter &para);
+    void ParameterChange(const CommandParameter *para);
+    void FilterPanelOk(const CommandParameter *para);
+    void FilterPanelCancel(const CommandParameter *para);
 
 private:
-    Ui_ControlPlan ui;
+    Ui_FilterPanel ui;
 
 	QRadioButton *rb_default;
 	QRadioButton *rb_wrap;
@@ -59,7 +59,7 @@ private:
 
 	VCV_IMAGE_OPERATION image_operation;
 
-	CommandParameter command_para;
+    CommandParameter_Filter *command_para;
 	void CreateBorderType();
 	void GetAllParameter();
 

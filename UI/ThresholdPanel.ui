@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Threshold</class>
+ <widget class="QWidget" name="Threshold">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>472</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Block Size</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Thresh</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Max Value</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QSpinBox" name="sp_blocksize"/>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>Constant</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QDoubleSpinBox" name="dsp_constant"/>
+     </item>
+     <item row="0" column="1">
+      <widget class="QDoubleSpinBox" name="dsp_thresh"/>
+     </item>
+     <item row="1" column="1">
+      <widget class="QDoubleSpinBox" name="dsp_max"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QGroupBox" name="groupBox">
+       <property name="title">
+        <string>ThresholdTypes</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QRadioButton" name="rb_binary">
+          <property name="text">
+           <string>BINARY</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="rb_binary_inv">
+          <property name="text">
+           <string>BINARY_INV</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="rb_trunc">
+          <property name="text">
+           <string>TRUNC</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="rb_tozero">
+          <property name="text">
+           <string>TOZERO</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="rb_tozero_inv">
+          <property name="text">
+           <string>TOZERO_INV</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="rb_mask">
+          <property name="text">
+           <string>MASK</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="rb_otsu">
+          <property name="text">
+           <string>OTSU</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="rb_triangle">
+          <property name="text">
+           <string>TRIANGLE</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="QGroupBox" name="groupBox_2">
+       <property name="title">
+        <string>AdaptiveTypes</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="QRadioButton" name="rb_mean_c">
+          <property name="text">
+           <string>MEAN_C</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="rb_gaussian_c">
+          <property name="text">
+           <string>GAUSSIAN_C</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>dsp_thresh</tabstop>
+  <tabstop>dsp_max</tabstop>
+  <tabstop>sp_blocksize</tabstop>
+  <tabstop>dsp_constant</tabstop>
+  <tabstop>rb_binary</tabstop>
+  <tabstop>rb_binary_inv</tabstop>
+  <tabstop>rb_trunc</tabstop>
+  <tabstop>rb_tozero</tabstop>
+  <tabstop>rb_tozero_inv</tabstop>
+  <tabstop>rb_mask</tabstop>
+  <tabstop>rb_otsu</tabstop>
+  <tabstop>rb_triangle</tabstop>
+  <tabstop>rb_mean_c</tabstop>
+  <tabstop>rb_gaussian_c</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

@@ -3,12 +3,14 @@
 
 #include "FilterPanel.h"
 
-QFilterPanel::QFilterPanel()
+QFilterPanel::QFilterPanel(QWidget *parent, Qt::WindowFlags f)
 {
     ui.setupUi(this);
 	CreateBorderType();
 
 	Disable();
+
+    command_para = new CommandParameter_Filter;
 
 	connect(ui.dsp_delta,SIGNAL(valueChanged(double)),this,SLOT(ValueChange()));
 	connect(ui.dsp_scale,SIGNAL(valueChanged(double)),this,SLOT(ValueChange()));
@@ -30,7 +32,8 @@ QFilterPanel::QFilterPanel()
 
 QFilterPanel::~QFilterPanel()
 {
-
+    if(command_para!=NULL)
+        delete command_para;
 }
 
 double QFilterPanel::GetSigmaColor()
@@ -223,15 +226,15 @@ void QFilterPanel::CreateBorderType()
 
 void QFilterPanel::GetAllParameter()
 {
-	command_para.delta = GetDelta();
-	command_para.iterations =GetIterations();
-	command_para.ksize = GetKSize();
-	command_para.point = GetPoint();
-	command_para.scale = GetScale();
-	command_para.sigmacolor = GetSigmaColor();
-	command_para.sigmaspace = GetSigmaSpace();
-	command_para.size = GetSize();
-	command_para.bordertype = GetBorderType();
+    command_para->delta = GetDelta();
+    command_para->iterations =GetIterations();
+    command_para->ksize = GetKSize();
+    command_para->point = GetPoint();
+    command_para->scale = GetScale();
+    command_para->sigmacolor = GetSigmaColor();
+    command_para->sigmaspace = GetSigmaSpace();
+    command_para->size = GetSize();
+    command_para->bordertype = GetBorderType();
 }
 
 void QFilterPanel::Disable()

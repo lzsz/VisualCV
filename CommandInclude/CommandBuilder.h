@@ -10,7 +10,7 @@ public:
 	QCommandBuilder();
 	~QCommandBuilder();
 
-	QVCVUndoCommand* CreateCommand(VCV_IMAGE_OPERATION operation);
+    QVCVUndoCommand* CreateCommand(VCV_IMAGE_OPERATION operation);
 };
 
 

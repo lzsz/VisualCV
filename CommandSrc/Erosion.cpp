@@ -12,13 +12,16 @@ QErosion::~QErosion()
 
 }
 
-bool QErosion::SetParameter(const CommandParameter &para)
+bool QErosion::SetParameter(const CommandParameter *para)
 {
-	if(para.iterations%2!=1)
+    if(para==NULL)
+        return false;
+    CommandParameter_Filter *filter_para = (CommandParameter_Filter*)para;
+    if(filter_para->iterations%2!=1)
 		return false;
 
-	iterations = para.iterations;
-	anchor = para.point;
+    iterations = filter_para->iterations;
+    anchor = filter_para->point;
 
 	return true;
 }

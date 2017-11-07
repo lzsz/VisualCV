@@ -12,7 +12,7 @@ public:
 	QMedianBlurFilter();
 	~QMedianBlurFilter();
 
-	virtual bool SetParameter(const CommandParameter &para);
+    virtual bool SetParameter(const CommandParameter *para);
 
 	virtual void undo();
 	virtual void redo();

@@ -26,7 +26,12 @@ enum VCV_IMAGE_OPERATION
 	IMAGE_FILTER_DILATION
 };
 
-struct CommandParameter
+class CommandParameter
+{
+
+};
+
+struct CommandParameter_Filter : public CommandParameter
 {
 	double sigmacolor;
 	double sigmaspace;

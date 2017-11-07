@@ -12,13 +12,16 @@ QCustomFilter2D::~QCustomFilter2D()
 
 }
 
-bool QCustomFilter2D::SetParameter(const CommandParameter &para)
+bool QCustomFilter2D::SetParameter(const CommandParameter *para)
 {
-	border_type = para.bordertype;
-    depth = para.depth;
-	delta = para.delta;
-	anchor = para.point;
-	kernel = para.kernel;
+    if(para==NULL)
+        return false;
+    CommandParameter_Filter *filter_para = (CommandParameter_Filter*)para;
+    border_type = filter_para->bordertype;
+    depth = filter_para->depth;
+    delta = filter_para->delta;
+    anchor = filter_para->point;
+    kernel = filter_para->kernel;
 
 	return true;
 }

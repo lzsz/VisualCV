@@ -12,15 +12,18 @@ GaussianBlurFilter::~GaussianBlurFilter()
 
 }
 
-bool GaussianBlurFilter::SetParameter(const CommandParameter &para)
+bool GaussianBlurFilter::SetParameter(const CommandParameter *para)
 {
-	if((para.size.width%2==0)||(para.size.height%2==0))
+    if(para==NULL)
+        return false;
+    CommandParameter_Filter *filter_para = (CommandParameter_Filter*)para;
+    if((filter_para->size.width%2==0)||(filter_para->size.height%2==0))
 		return false;
 
-	size = para.size;
-	sigma_x = para.sigmacolor;
-	sigma_y = para.sigmaspace;
-	border_type = para.bordertype;
+    size = filter_para->size;
+    sigma_x = filter_para->sigmacolor;
+    sigma_y = filter_para->sigmaspace;
+    border_type = filter_para->bordertype;
 
 	return true;
 }

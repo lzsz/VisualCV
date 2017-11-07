@@ -43,6 +43,7 @@ QVCVMainWindow::QVCVMainWindow(QWidget *parent , Qt::WindowFlags f)
 	current_command = NULL;
 	operation_data = NULL;
 	command_builder = new QCommandBuilder;
+    filterpanel = Q_NULLPTR;
 }
 
 QVCVMainWindow::~QVCVMainWindow()
@@ -118,7 +119,7 @@ void QVCVMainWindow::CreateControlPanel()
 {
 //	tabwidget = new QTabWidget;
 //    dockwidget = new QDockWidget;
-    filterpanel = new QFilterPanel;
+    //filterpanel = new QFilterPanel;
 //    tabwidget->addTab(filterpanel,tr("Filter"));
 //    dockwidget->setWidget(tabwidget);
 //    dockwidget->setFeatures(QDockWidget::AllDockWidgetFeatures);
@@ -191,8 +192,17 @@ void QVCVMainWindow::Saveas()
 
 void QVCVMainWindow::BlurFilter()
 {
-    if(filterpanel!=NULL)
+    QVCVChildWindow *sub = (QVCVChildWindow*)mdi_area->activeSubWindow();
+    filterpanel = sub->GetFilterPanel();
+    if(filterpanel==NULL)
+    {
+        filterpanel = new QFilterPanel;
+        ((QVCVChildWindow*)mdi_area->activeSubWindow())->SetFilterPanel(filterpanel);
         filterpanel->show();
+    }
+    else
+        filterpanel->show();
+
 	DoOperation(IMAGE_FILTER_BLUR);
 }
 
@@ -236,7 +246,7 @@ void QVCVMainWindow::CustomFilter2D()
 		if(operation_data==NULL)
 			return;
 
-		CommandParameter cp;
+        CommandParameter_Filter cp;
 		cp.depth = customfilterdlg->GetDepth();
 		cp.delta = customfilterdlg->GetDelta();
 		cp.kernel = customfilterdlg->GetKernel();
@@ -244,7 +254,7 @@ void QVCVMainWindow::CustomFilter2D()
 		cp.bordertype = BORDER_DEFAULT;
 		QCustomFilter2D *command = new QCustomFilter2D;
 
-		command->Initialize(operation_data,cp);
+        command->Initialize(operation_data,&cp);
 		command->redo();
 		
 		operation_data->AddStep(command);
@@ -289,26 +299,26 @@ void QVCVMainWindow::NormalSize()
 		((QVCVChildWindow*)mdi_area->activeSubWindow()->widget())->SetDisplayScale(1.0);
 }
 
-void QVCVMainWindow::ParameterChangeRespond(const CommandParameter &para)
+void QVCVMainWindow::ParameterChangeRespond(const CommandParameter *para)
 {
 	if(current_command==NULL)
 		return;
 
 	if(!current_command->IsInit())
 	{
-		if(!current_command->Initialize(operation_data,para))
+        if(!current_command->Initialize(operation_data,para))
 			return;
 	}
 	else
 	{
-		if(!current_command->SetParameter(para))
+        if(!current_command->SetParameter(para))
 			return;
 	}
 
 	current_command->redo();
 }
 
-void QVCVMainWindow::FilterPanelOk(const CommandParameter &para)
+void QVCVMainWindow::FilterPanelOk(const CommandParameter *para)
 {
 //	mdi_area->setEnabled(true);
 //	menuBar()->setEnabled(true);
@@ -318,12 +328,12 @@ void QVCVMainWindow::FilterPanelOk(const CommandParameter &para)
 
 	if(!current_command->IsInit())
 	{
-		if(!current_command->Initialize(operation_data,para))
+        if(!current_command->Initialize(operation_data,para))
 			return;
 	}
 	else
 	{
-		if(!current_command->SetParameter(para))
+        if(!current_command->SetParameter(para))
 			return;
 	}
 
@@ -332,7 +342,7 @@ void QVCVMainWindow::FilterPanelOk(const CommandParameter &para)
 	operation_data = NULL;
 }
 
-void QVCVMainWindow::FilterPanelCancel(const CommandParameter &para)
+void QVCVMainWindow::FilterPanelCancel(const CommandParameter *para)
 {
 	mdi_area->setEnabled(true);
 	menuBar()->setEnabled(true);
@@ -341,7 +351,7 @@ void QVCVMainWindow::FilterPanelCancel(const CommandParameter &para)
 		return;
 
 	if(!current_command->IsInit())
-		if(!current_command->Initialize(operation_data,para))
+        if(!current_command->Initialize(operation_data,para))
 			return;
 	current_command->undo();
 	delete current_command;
@@ -383,9 +393,9 @@ void QVCVMainWindow::CreateConnection()
 
 
 	connect(mdi_area,SIGNAL(subWindowActivated(QMdiSubWindow*)),this,SLOT(WindowActive(QMdiSubWindow*)));
-    connect(filterpanel,SIGNAL(ParameterChange(const CommandParameter&)),this,SLOT(ParameterChangeRespond(const CommandParameter&)));
-    connect(filterpanel,SIGNAL(FilterPanelOk(const CommandParameter&)),this,SLOT(FilterPanelOk(const CommandParameter&)));
-    connect(filterpanel,SIGNAL(FilterPanelCancel(const CommandParameter &)),this,SLOT(FilterPanelCancel(const CommandParameter &)));
+    //connect(filterpanel,SIGNAL(ParameterChange(const CommandParameter*)),this,SLOT(ParameterChangeRespond(const CommandParameter*)));
+    //connect(filterpanel,SIGNAL(FilterPanelOk(const CommandParameter*)),this,SLOT(FilterPanelOk(const CommandParameter*)));
+    //connect(filterpanel,SIGNAL(FilterPanelCancel(const CommandParameter*)),this,SLOT(FilterPanelCancel(const CommandParameter*)));
 
 	connect(filter_blur,SIGNAL(triggered()),this,SLOT(BlurFilter()));
 	connect(filter_gaussian,SIGNAL(triggered()),this,SLOT(GaussianBlurFilter()));

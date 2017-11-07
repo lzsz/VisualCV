@@ -15,14 +15,18 @@ QBlurFilter::~QBlurFilter()
 	final_image.release();
 }
 
-bool QBlurFilter::SetParameter(const CommandParameter &para)
+bool QBlurFilter::SetParameter(const CommandParameter *para)
 {
-	if(para.size.width!=para.size.height)
+    if(para==NULL)
+        return false;
+    CommandParameter_Filter *filter_para = (CommandParameter_Filter*)para;
+
+    if(filter_para->size.width!=filter_para->size.height)
 		return false;
 
-	size = para.size;
-	anchor = para.point;
-	border_type = para.bordertype;
+    size = filter_para->size;
+    anchor = filter_para->point;
+    border_type = filter_para->bordertype;
 
 	if(anchor.x>=size.width)
 		anchor.x = size.width-1;

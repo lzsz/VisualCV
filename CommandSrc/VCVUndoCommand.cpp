@@ -13,12 +13,12 @@ QVCVUndoCommand::~QVCVUndoCommand()
 }
 
 	
-bool QVCVUndoCommand::Initialize(QVCVData *data, const CommandParameter &para)
+bool QVCVUndoCommand::Initialize(QVCVData *data, const CommandParameter *para)
 {
 	return false;
 }
 
-bool QVCVUndoCommand::SetParameter(const CommandParameter &para)
+bool QVCVUndoCommand::SetParameter(const CommandParameter *para)
 {
 	return false;
 }
