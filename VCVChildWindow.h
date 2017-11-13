@@ -7,6 +7,11 @@ class QMenu;
 class QAction;
 class QScrollBar;
 class QFilterPanel;
+class QControlPanel;
+class QVCVData;
+class QCommandBuilder;
+class QVCVUndoCommand;
+class QImageProcCommand;
 
 #define SCROLLBAR_SIZE 20
 
@@ -24,8 +29,11 @@ public:
 	void SetDisplayScale(float scale);
 	float GetDisplayScale();
 
-    QFilterPanel* GetFilterPanel();
-    void SetFilterPanel(QFilterPanel *panel);
+    QFilterPanel* GetFilterPanel(VCV_IMAGE_OPERATION operation);
+public slots:
+    void FilterParameterChangeRespond(const CommandParameter *para);
+    void FilterPanelOk(const CommandParameter *para);
+    void FilterPanelCancel(const CommandParameter *para);
 protected slots:
 	void VScrollBarRangeChanged(int min, int max);
 	void HScrollBarRangeChanged(int min, int max);
@@ -43,6 +51,10 @@ protected:
 
     QFilterPanel *filter_panel;
 
+    QCommandBuilder *command_builder;
+    QImageProcCommand *filter_command;
+    QVCVData *operator_data;
+
 	int image_top;
 	int image_left;
 	QRect image_display_area;
@@ -53,6 +65,8 @@ protected:
     void AdjustScrollBarRange();
 
     void DrawClient();
+
+    void DoOperation(QControlPanel *panel, QVCVUndoCommand **command, VCV_IMAGE_OPERATION operation);
 };
 
 #endif

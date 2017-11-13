@@ -1,7 +1,7 @@
 #ifndef CONTROLPLAN_H
 #define CONTROLPLAN_H
 
-#include <QWidget>
+#include "ControlPanel.h"
 
 #include "ui_FilterPanel.h"
 #include "SystemDefine.h"
@@ -11,7 +11,7 @@ using namespace std;
 
 class QRadioButton;
 
-class QFilterPanel : public QWidget
+class QFilterPanel : public QControlPanel
 {
 	Q_OBJECT
 public:
@@ -31,6 +31,7 @@ public:
 	void Disable();
 
 	void BeginOperation(VCV_IMAGE_OPERATION operation);
+
 	void EndOperation(VCV_IMAGE_OPERATION operation);
 
 protected slots:

@@ -6,6 +6,7 @@
 QFilterPanel::QFilterPanel(QWidget *parent, Qt::WindowFlags f)
 {
     ui.setupUi(this);
+    setWindowFlags(f);
 	CreateBorderType();
 
 	Disable();

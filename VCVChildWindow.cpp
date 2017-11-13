@@ -1,9 +1,13 @@
 #include <QImage>
 #include <QPainter>
 #include <QScrollBar>
+#include "ControlPanel.h"
 #include "FilterPanel.h"
 #include "VCVDataModel.h"
 #include "DataModelInstance.h"
+#include "CommandInclude/CommandBuilder.h"
+#include "CommandInclude/VCVUndoCommand.h"
+#include "CommandInclude/ImageProcCommand.h"
 #include "VCVChildWindow.h"
 
 QVCVChildWindow::QVCVChildWindow(QWidget *parent, Qt::WindowFlags f)
@@ -19,6 +23,7 @@ QVCVChildWindow::QVCVChildWindow(QWidget *parent, Qt::WindowFlags f)
     display_scale = 1.0;
 
     filter_panel = Q_NULLPTR;
+
 
 	connect(v_scrollbar,SIGNAL(valueChanged(int)),this,SLOT(repaint()));
 	connect(h_scrollbar,SIGNAL(valueChanged(int)),this,SLOT(repaint()));
@@ -67,23 +72,50 @@ float QVCVChildWindow::GetDisplayScale()
 	return display_scale;
 }
 
-QFilterPanel* QVCVChildWindow::GetFilterPanel()
+QFilterPanel* QVCVChildWindow::GetFilterPanel(VCV_IMAGE_OPERATION operation)
 {
+    if(filter_panel==NULL)
+    {
+        filter_panel = new QFilterPanel(NULL,Qt::WindowStaysOnTopHint);
+        connect(filter_panel,SIGNAL(ParameterChange(const CommandParameter*)),this,SLOT(FilterParameterChangeRespond(const CommandParameter*)));
+        connect(filter_panel,SIGNAL(FilterPanelOk(const CommandParameter*)),this,SLOT(FilterPanelOk(const CommandParameter*)));
+        connect(filter_panel,SIGNAL(FilterPanelCancel(const CommandParameter*)),this,SLOT(FilterParameterChangeRespond(const CommandParameter*)));
+    }
+
+    if(filter_panel!=NULL)
+        DoOperation((QControlPanel*)filter_panel,(QVCVUndoCommand**)&filter_command,operation);
+
     return filter_panel;
 }
 
-void QVCVChildWindow::SetFilterPanel(QFilterPanel *panel)
+void QVCVChildWindow::FilterParameterChangeRespond(const CommandParameter *para)
 {
-    if(panel==NULL)
-        return ;
+    if(filter_command==NULL)
+        return;
 
-    if(filter_panel!=NULL)
+    if(!filter_command->IsInit())
     {
-        filter_panel->close();
-        delete filter_panel;
-        filter_panel = NULL;
+        if(!filter_command->Initialize(operator_data,para))
+            return;
     }
-    filter_panel = panel;
+    else
+    {
+        if(!filter_command->SetParameter(para))
+            return;
+    }
+
+    filter_command->redo();
+
+}
+
+void QVCVChildWindow::FilterPanelOk(const CommandParameter *para)
+{
+
+}
+
+void QVCVChildWindow::FilterPanelCancel(const CommandParameter *para)
+{
+
 }
 /////////////////////
 //slot function
@@ -220,4 +252,19 @@ void QVCVChildWindow::DrawClient()
 	}
 	
 	painter.drawImage(widget_display_area,*update_image,image_display_area);
+}
+
+void QVCVChildWindow::DoOperation(QControlPanel *panel,QVCVUndoCommand **command, VCV_IMAGE_OPERATION operation)
+{
+    if(QDataModelInstance::Instance()->Count()<=0)
+        return;
+
+    operator_data = QDataModelInstance::Instance()->GetData(windowTitle().toStdString().c_str());
+
+    if(operator_data==NULL)
+        return;
+
+    panel->BeginOperation(operation);
+
+    *command = command_builder->CreateCommand(operation);
 }

@@ -192,18 +192,13 @@ void QVCVMainWindow::Saveas()
 
 void QVCVMainWindow::BlurFilter()
 {
-    QVCVChildWindow *sub = (QVCVChildWindow*)mdi_area->activeSubWindow();
-    filterpanel = sub->GetFilterPanel();
-    if(filterpanel==NULL)
-    {
-        filterpanel = new QFilterPanel;
-        ((QVCVChildWindow*)mdi_area->activeSubWindow())->SetFilterPanel(filterpanel);
-        filterpanel->show();
-    }
-    else
-        filterpanel->show();
+    if(mdi_area->subWindowList().empty())
+        return;
+    filterpanel = ((QVCVChildWindow*)mdi_area->activeSubWindow()->widget())->GetFilterPanel(IMAGE_FILTER_BLUR);
+    if(filterpanel!=NULL)
+       filterpanel->show();
 
-	DoOperation(IMAGE_FILTER_BLUR);
+//DoOperation(IMAGE_FILTER_BLUR);
 }
 
 void QVCVMainWindow::GaussianBlurFilter()
