@@ -19,3 +19,18 @@ void QControlPanel::EndOperation(VCV_IMAGE_OPERATION operation)
 {
 
 }
+
+void QControlPanel::ValueChange()
+{
+
+}
+
+void QControlPanel::PushOk()
+{
+
+}
+
+void QControlPanel::PushCancel()
+{
+
+}

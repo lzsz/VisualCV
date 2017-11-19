@@ -1,7 +1,7 @@
 #ifndef CUSTOMFILTERDLG_H
 #define CUSTOMFILTERDLG_H
 
-#include <QDialog>
+#include "ControlPanel.h"
 
 #include "SystemDefine.h"
 #include "delegate.h"
@@ -9,11 +9,11 @@
 
 #define CUSTOM_FILTER_TABLEWIDGET_ITEM_WIDTH 40
 
-class QCustomFilterDlg : public QDialog
+class QCustomFilterDlg : public QControlPanel
 {
 	Q_OBJECT
 public:
-	QCustomFilterDlg();
+    QCustomFilterDlg(QWidget *parent = Q_NULLPTR, Qt::WindowFlags f = Qt::WindowFlags());
 	~QCustomFilterDlg();
 
 	bool IsInit();
@@ -38,6 +38,8 @@ protected:
 	Mat src_mat;
 	Mat dst_mat;
 	Mat kernel;
+
+    CommandParameter_Filter *command_para;
 
 	virtual void paintEvent(QPaintEvent *e);
 

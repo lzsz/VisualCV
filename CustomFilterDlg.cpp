@@ -8,15 +8,20 @@
 #include "Utility.h"
 #include "CustomFilterDlg.h"
 
-QCustomFilterDlg::QCustomFilterDlg()
+QCustomFilterDlg::QCustomFilterDlg(QWidget *parent , Qt::WindowFlags f )
 {
+    setWindowFlags(f);
 	initialization = false;
+    command_para = new CommandParameter_Filter;
 }
 
 QCustomFilterDlg::~QCustomFilterDlg()
 {
 	src_mat.release();
 	dst_mat.release();
+
+    if(command_para!=NULL)
+        delete command_para;
 }
 
 bool QCustomFilterDlg::Initialize(const Mat &mat)
@@ -24,8 +29,8 @@ bool QCustomFilterDlg::Initialize(const Mat &mat)
 	if(mat.empty())
 		return false;
 
-	src_mat = mat.clone();
-	dst_mat = mat.clone();
+    mat.copyTo(src_mat);
+    mat.copyTo(dst_mat);
 
 	InitUI();
 
@@ -70,9 +75,9 @@ void QCustomFilterDlg::InitUI()
 	connect(ui.sp_width,SIGNAL(valueChanged(int)),this,SLOT(KernelSizeChange()));
 	connect(ui.sp_height,SIGNAL(valueChanged(int)),this,SLOT(KernelSizeChange()));
 
-	connect(ui.buttonBox->button(QDialogButtonBox::Ok),SIGNAL(clicked()),this,SLOT(PushOk()));
-	connect(ui.buttonBox->button(QDialogButtonBox::Apply),SIGNAL(clicked()),this,SLOT(PushApply()));
-	connect(ui.buttonBox->button(QDialogButtonBox::Cancel),SIGNAL(clicked()),this,SLOT(PushCancel()));
+    connect(ui.pb_Ok,SIGNAL(clicked()),this,SLOT(PushOk()));
+    connect(ui.pb_apply,SIGNAL(clicked()),this,SLOT(PushApply()));
+    connect(ui.pb_cancel,SIGNAL(clicked()),this,SLOT(PushCancel()));
 
 
 	ui.tableWidget->setItemDelegate(&sp_delegate);
@@ -92,10 +97,15 @@ void QCustomFilterDlg::InitUI()
 
 void QCustomFilterDlg::PushOk()
 {
-	src_mat.release();
-	dst_mat.release();
-
-	accept();
+    GetKernelFromUI();
+    command_para->delta = ui.dsp_delta->value();
+    command_para->depth = ui.sp_depth->value();
+    command_para->point = GetAnchor();
+    command_para->kernel = kernel;
+    command_para->bordertype = BORDER_DEFAULT;
+    emit PanelOk(command_para);
+//    src_mat.release();
+//	dst_mat.release();
 }
 
 void QCustomFilterDlg::PushCancel()
@@ -103,7 +113,13 @@ void QCustomFilterDlg::PushCancel()
 	src_mat.release();
 	dst_mat.release();
 
-	reject();
+    command_para->delta = ui.dsp_delta->value();
+    command_para->point = GetAnchor();
+    command_para->point = GetAnchor();
+    command_para->kernel = kernel;
+    command_para->bordertype = BORDER_DEFAULT;
+
+    emit PanelCancel(command_para);
 }
 
 void QCustomFilterDlg::PushApply()
@@ -119,7 +135,14 @@ void QCustomFilterDlg::PushApply()
 	anchor.y = ui.sp_anchory->value();
     filter2D(src_mat,dst_mat,ui.sp_depth->value(),kernel,anchor,delta);
 
-	repaint();
+    repaint();
+
+    command_para->delta = ui.dsp_delta->value();
+    command_para->depth = ui.sp_depth->value();
+    command_para->point = GetAnchor();
+    command_para->kernel = kernel;
+    command_para->bordertype = BORDER_DEFAULT;
+    emit PanelOk(command_para);
 }
 
 void QCustomFilterDlg::KernelSizeChange()
@@ -155,8 +178,6 @@ void QCustomFilterDlg::paintEvent(QPaintEvent *e)
 	//painter.drawImage(0,0,*display_image);
 
 	delete display_image;
-
-	QDialog::paintEvent(e);
 }
 
 void QCustomFilterDlg::GetKernelFromUI()

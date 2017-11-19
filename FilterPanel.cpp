@@ -186,7 +186,7 @@ void QFilterPanel::PushOk()
 
 	GetAllParameter();
 
-    emit FilterPanelOk(command_para);
+    emit PanelOk(command_para);
 }
 
 void QFilterPanel::PushCancel()
@@ -195,7 +195,7 @@ void QFilterPanel::PushCancel()
 
 	GetAllParameter();
 
-    emit FilterPanelCancel(command_para);
+    emit PanelCancel(command_para);
 }
 
 void QFilterPanel::CreateBorderType()

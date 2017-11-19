@@ -3,6 +3,7 @@
 #include "CommandInclude/GaussianBlurFilter.h"
 #include "CommandInclude/MedianBlurFilter.h"
 #include "CommandInclude/BilateralFilter.h"
+#include "CommandInclude/CustomFilter2D.h"
 #include "CommandInclude/Erosion.h"
 #include "CommandInclude/Dilation.h"
 
@@ -35,6 +36,8 @@ QVCVUndoCommand* QCommandBuilder::CreateCommand(VCV_IMAGE_OPERATION operation)
 		return new QErosion;
 	case IMAGE_FILTER_DILATION:
 		return new QDilation;
+    case IMAGE_FILTER_CUSTOM2D:
+        return new QCustomFilter2D;
 	default:
 		return NULL;
 	}

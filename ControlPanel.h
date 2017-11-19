@@ -14,6 +14,15 @@ public:
     virtual void BeginOperation(VCV_IMAGE_OPERATION operation);
     virtual void EndOperation(VCV_IMAGE_OPERATION operation);
 
+protected slots:
+    virtual void ValueChange();
+    virtual void PushOk();
+    virtual void PushCancel();
+signals:
+    void ParameterChange(const CommandParameter *para);
+    void PanelOk(const CommandParameter *para);
+    void PanelCancel(const CommandParameter *para);
+
 signals:
 
 public slots:

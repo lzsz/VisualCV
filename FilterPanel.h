@@ -31,19 +31,12 @@ public:
 	void Disable();
 
 	void BeginOperation(VCV_IMAGE_OPERATION operation);
-
 	void EndOperation(VCV_IMAGE_OPERATION operation);
 
 protected slots:
-	void ValueChange();
-	void PushOk();
-	void PushCancel();
-
-
-signals:
-    void ParameterChange(const CommandParameter *para);
-    void FilterPanelOk(const CommandParameter *para);
-    void FilterPanelCancel(const CommandParameter *para);
+    virtual void ValueChange();
+    virtual void PushOk();
+    virtual void PushCancel();
 
 private:
     Ui_FilterPanel ui;

@@ -28,7 +28,7 @@ public:
 
 private:
 	QVCVMainWindow(const QVCVMainWindow &VCVMainWindow);
-	const void operator = (const QVCVMainWindow &VCVMainWindow);
+    const QVCVMainWindow operator = (const QVCVMainWindow &VCVMainWindow);
 
 private slots:
 	void WindowActive(QMdiSubWindow *subwin);
@@ -47,11 +47,6 @@ private slots:
 	void ZoomIn();
 	void ZoomOut();
 	void NormalSize();
-
-	void ParameterChangeRespond(const CommandParameter *para);
-    void FilterPanelOk(const CommandParameter *para);
-    void FilterPanelCancel(const CommandParameter *para);
-
 private:
 	QMenu *file_menu;
 	QMenu *view_menu;
@@ -84,9 +79,8 @@ private:
 
 	QTabWidget *tabwidget;
     QDockWidget *dockwidget;
-    QFilterPanel *filterpanel;
-	QCommandBuilder *command_builder;
-	QVCVUndoCommand *current_command;
+    QCommandBuilder *command_builder;
+    QVCVUndoCommand *current_command;
 
     VCV_IMAGE_OPERATION image_operation;
 
@@ -99,6 +93,7 @@ private:
 	void CreateConnection();
 
 	void DoOperation(VCV_IMAGE_OPERATION operation);
+    void ShowFilterPanel(VCV_IMAGE_OPERATION operation);
 };
 
 #endif
