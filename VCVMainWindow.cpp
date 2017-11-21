@@ -38,11 +38,6 @@ QVCVMainWindow::QVCVMainWindow(QWidget *parent , Qt::WindowFlags f)
     setCentralWidget(mdi_area);
 
     CreateConnection();
-
-    image_operation = IMAGE_NONE;
-    current_command = NULL;
-    operation_data = NULL;
-    command_builder = new QCommandBuilder;
 }
 
 QVCVMainWindow::~QVCVMainWindow()
@@ -54,7 +49,6 @@ void QVCVMainWindow::InitUI()
 {
     CreateAction();
     CreateMenu();
-    CreateControlPanel();
 
     QLabel *label1 = new QLabel(tr("OK"));
     statusBar()->addWidget(label1);
@@ -112,17 +106,6 @@ void QVCVMainWindow::CreateMenu()
     filter_menu->addAction(filter_custom2d);
     morphological_menu->addAction(morphological_erosion);
     morphological_menu->addAction(morphological_dilation);
-}
-
-void QVCVMainWindow::CreateControlPanel()
-{
-    //	tabwidget = new QTabWidget;
-    //    dockwidget = new QDockWidget;
-    //filterpanel = new QFilterPanel;
-    //    tabwidget->addTab(filterpanel,tr("Filter"));
-    //    dockwidget->setWidget(tabwidget);
-    //    dockwidget->setFeatures(QDockWidget::AllDockWidgetFeatures);
-    //    addDockWidget(Qt::BottomDockWidgetArea,dockwidget);
 }
 
 void QVCVMainWindow::WindowActive(QMdiSubWindow *subwin)
@@ -211,50 +194,16 @@ void QVCVMainWindow::BilateralFilter()
 
 void QVCVMainWindow::CustomFilter2D()
 {
-//    if(mdi_area->activeSubWindow()==NULL)
-//        return;
-
-//    QCustomFilterDlg *customfilterdlg = new QCustomFilterDlg;
-
-//    customfilterdlg->Initialize(QDataModelInstance::Instance()->GetData(mdi_area->activeSubWindow()->windowTitle().toStdString().c_str())->GetDisplayImage());
-
-//    //int result = customfilterdlg->show();
-//    customfilterdlg->show();
-//    //if(result == ::Accepted)
-//    {
-//        operation_data = QDataModelInstance::Instance()->GetData(mdi_area->activeSubWindow()->windowTitle().toStdString().c_str());
-
-//        if(operation_data==NULL)
-//            return;
-
-//        CommandParameter_Filter cp;
-//        cp.depth = customfilterdlg->GetDepth();
-//        cp.delta = customfilterdlg->GetDelta();
-//        cp.kernel = customfilterdlg->GetKernel();
-//        cp.point = customfilterdlg->GetAnchor();
-//        cp.bordertype = BORDER_DEFAULT;
-//        QCustomFilter2D *command = new QCustomFilter2D;
-
-//        command->Initialize(operation_data,&cp);
-//        command->redo();
-
-//        operation_data->AddStep(command);
-
-//        operation_data = NULL;
-//    }
-
-//    delete customfilterdlg;
     if(mdi_area->activeSubWindow()==NULL)
         return;
 
-    QCustomFilterDlg *filterpanel = ((QVCVChildWindow*)mdi_area->activeSubWindow()->widget())->GetCustomFilterPanel();
+    QCustomFilterDlg *customfilterpanel = ((QVCVChildWindow*)mdi_area->activeSubWindow()->widget())->GetCustomFilterPanel();
 
-    if(filterpanel!=NULL)
+    if(customfilterpanel!=NULL)
     {
-        filterpanel->Initialize(QDataModelInstance::Instance()->GetData(mdi_area->activeSubWindow()->windowTitle().toStdString().c_str())->GetDisplayImage());
-        filterpanel->show();
+        customfilterpanel->Initialize(QDataModelInstance::Instance()->GetData(mdi_area->activeSubWindow()->windowTitle().toStdString().c_str())->GetDisplayImage());
+        customfilterpanel->show();
     }
-
 }
 
 void QVCVMainWindow::Erosion()

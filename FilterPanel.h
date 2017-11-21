@@ -30,8 +30,8 @@ public:
 
 	void Disable();
 
-	void BeginOperation(VCV_IMAGE_OPERATION operation);
-	void EndOperation(VCV_IMAGE_OPERATION operation);
+    virtual void BeginOperation(VCV_IMAGE_OPERATION operation);
+    virtual void EndOperation(VCV_IMAGE_OPERATION operation);
 
 protected slots:
     virtual void ValueChange();
@@ -55,7 +55,7 @@ private:
 
     CommandParameter_Filter *command_para;
 	void CreateBorderType();
-	void GetAllParameter();
+    virtual void GetAllParameter();
 
 	void EnableBlur();
 	void DisableBlur();

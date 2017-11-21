@@ -23,9 +23,9 @@ signals:
     void PanelOk(const CommandParameter *para);
     void PanelCancel(const CommandParameter *para);
 
-signals:
+protected:
+    virtual void GetAllParameter();
 
-public slots:
 };
 
 #endif // CONTROLPANEL_H

@@ -34,3 +34,8 @@ void QControlPanel::PushCancel()
 {
 
 }
+
+void QControlPanel::GetAllParameter()
+{
+
+}

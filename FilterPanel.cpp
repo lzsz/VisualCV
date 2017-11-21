@@ -113,30 +113,25 @@ int QFilterPanel::GetBorderType()
 
 void QFilterPanel::BeginOperation(VCV_IMAGE_OPERATION operation)
 {
+    image_operation = operation;
 	switch(operation)
 	{
 	case IMAGE_FILTER_BLUR:
-		image_operation = operation;
 		EnableBlur();
 		break;
 	case IMAGE_FILTER_GAUSSIANBLUR:
-		image_operation = operation;
 		EnableGaussianBlur();
 		break;
 	case IMAGE_FILTER_MEDIANBLUR:
-		image_operation = operation;
 		EnableMedianBlur();
 		break;
 	case IMAGE_FILTER_BILATERAL:
-		image_operation = operation;
 		EnableBilateral();
 		break;
 	case IMAGE_FILTER_EROSION:
-		image_operation = operation;
 		EnableErosion();
 		break;
 	case IMAGE_FILTER_DILATION:
-		image_operation = operation;
 		EnableErosion();
 		break;
 	default:

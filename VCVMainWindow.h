@@ -72,24 +72,22 @@ private:
 	QAction *filter_median;
 	QAction *filter_bilateral;
 	QAction *filter_custom2d;
+
     QAction *morphological_erosion;
     QAction *morphological_dilation;
+    QAction *morphological_threshold;
+    QAction *morphological_adaptivethreshold;
+
 
 	QMdiArea *mdi_area;
 
 	QTabWidget *tabwidget;
     QDockWidget *dockwidget;
-    QCommandBuilder *command_builder;
-    QVCVUndoCommand *current_command;
-
     VCV_IMAGE_OPERATION image_operation;
-
-	QVCVData *operation_data;
 
 	void InitUI();
 	void CreateAction();
 	void CreateMenu();
-    void CreateControlPanel();
 	void CreateConnection();
 
 	void DoOperation(VCV_IMAGE_OPERATION operation);
