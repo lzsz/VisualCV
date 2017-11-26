@@ -35,8 +35,9 @@ class CommandParameter
 
 };
 
-struct CommandParameter_Filter : public CommandParameter
+class CommandParameter_Filter : public CommandParameter
 {
+public:
 	double sigmacolor;
 	double sigmaspace;
 	double scale;
@@ -50,8 +51,9 @@ struct CommandParameter_Filter : public CommandParameter
 	Mat kernel;
 };
 
-struct CommandParameter_Threshold : public CommandParameter
+class CommandParameter_Threshold : public CommandParameter
 {
+public:
     double thresh;
     double max;
     double constant;

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>460</width>
+    <width>575</width>
     <height>325</height>
    </rect>
   </property>
@@ -40,7 +40,17 @@
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QSpinBox" name="sp_blocksize"/>
+        <widget class="QSpinBox" name="sp_blocksize">
+         <property name="minimum">
+          <number>3</number>
+         </property>
+         <property name="maximum">
+          <number>99</number>
+         </property>
+         <property name="singleStep">
+          <number>2</number>
+         </property>
+        </widget>
        </item>
        <item row="3" column="0">
         <widget class="QLabel" name="label_4">
@@ -50,13 +60,25 @@
         </widget>
        </item>
        <item row="3" column="1">
-        <widget class="QDoubleSpinBox" name="dsp_constant"/>
+        <widget class="QDoubleSpinBox" name="dsp_constant">
+         <property name="maximum">
+          <double>10000000000000000.000000000000000</double>
+         </property>
+        </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QDoubleSpinBox" name="dsp_thresh"/>
+        <widget class="QDoubleSpinBox" name="dsp_thresh">
+         <property name="maximum">
+          <double>100000000000000000.000000000000000</double>
+         </property>
+        </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QDoubleSpinBox" name="dsp_max"/>
+        <widget class="QDoubleSpinBox" name="dsp_max">
+         <property name="maximum">
+          <double>1000000000000000000.000000000000000</double>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>

@@ -43,6 +43,8 @@ private slots:
 	void CustomFilter2D();
 	void Erosion();
 	void Dilation();
+    void Threshold();
+    void AdaptiveThreshold();
 
 	void ZoomIn();
 	void ZoomOut();
@@ -90,8 +92,8 @@ private:
 	void CreateMenu();
 	void CreateConnection();
 
-	void DoOperation(VCV_IMAGE_OPERATION operation);
     void ShowFilterPanel(VCV_IMAGE_OPERATION operation);
+    void ShowThresholdPanel(VCV_IMAGE_OPERATION operation);
 };
 
 #endif

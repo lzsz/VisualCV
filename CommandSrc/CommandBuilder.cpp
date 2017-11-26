@@ -6,6 +6,7 @@
 #include "CommandInclude/CustomFilter2D.h"
 #include "CommandInclude/Erosion.h"
 #include "CommandInclude/Dilation.h"
+#include "CommandInclude/Threshold.h"
 
 #include "CommandInclude/CommandBuilder.h"
 
@@ -38,6 +39,10 @@ QVCVUndoCommand* QCommandBuilder::CreateCommand(VCV_IMAGE_OPERATION operation)
 		return new QDilation;
     case IMAGE_FILTER_CUSTOM2D:
         return new QCustomFilter2D;
+    case IMAGE_THRESHOLD_THRESHOLD:
+        return new QThreshold;
+    case IMAGE_THRESHOLD_ADAPTIVE:
+        return new QAdaptiveThreshold;
 	default:
 		return NULL;
 	}

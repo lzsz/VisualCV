@@ -7,6 +7,23 @@ QThresholdPanel::QThresholdPanel(QWidget *parent,Qt::WindowFlags f)
     ui.rb_mean_c->setChecked(true);
     setWindowFlags(f);
     command_para = new CommandParameter_Threshold;
+
+    connect(ui.dsp_thresh,SIGNAL(valueChanged(double)),this,SLOT(ValueChange()));
+    connect(ui.dsp_max,SIGNAL(valueChanged(double)),this,SLOT(ValueChange()));
+    connect(ui.dsp_constant,SIGNAL(valueChanged(double)),this,SLOT(ValueChange()));
+    connect(ui.sp_blocksize,SIGNAL(valueChanged(int)),this,SLOT(ValueChange()));
+    connect(ui.rb_binary,SIGNAL(clicked(bool)),this,SLOT(ValueChange()));
+    connect(ui.rb_binary_inv,SIGNAL(clicked(bool)),this,SLOT(ValueChange()));
+    connect(ui.rb_trunc,SIGNAL(clicked(bool)),this,SLOT(ValueChange()));
+    connect(ui.rb_tozero,SIGNAL(clicked(bool)),this,SLOT(ValueChange()));
+    connect(ui.rb_tozero_inv,SIGNAL(clicked(bool)),this,SLOT(ValueChange()));
+    connect(ui.rb_mask,SIGNAL(clicked(bool)),this,SLOT(ValueChange()));
+    connect(ui.rb_otsu,SIGNAL(clicked(bool)),this,SLOT(ValueChange()));
+    connect(ui.rb_triangle,SIGNAL(clicked(bool)),this,SLOT(ValueChange()));
+    connect(ui.rb_mean_c,SIGNAL(clicked(bool)),this,SLOT(ValueChange()));
+    connect(ui.rb_gaussian_c,SIGNAL(clicked(bool)),this,SLOT(ValueChange()));
+    connect(ui.pb_Ok,SIGNAL(clicked(bool)),this,SLOT(PushOk()));
+    connect(ui.pb_Cancel,SIGNAL(clicked(bool)),this,SLOT(PushCancel()));
 }
 
 QThresholdPanel::~QThresholdPanel()
@@ -49,6 +66,8 @@ void QThresholdPanel::PushOk()
     GetAllParameter();
 
     emit PanelOk(command_para);
+
+    DisableAll();
 }
 
 void QThresholdPanel::PushCancel()
@@ -56,6 +75,8 @@ void QThresholdPanel::PushCancel()
     GetAllParameter();
 
     emit PanelCancel(command_para);
+
+    DisableAll();
 }
 
 void QThresholdPanel::EnableThreshold()
@@ -74,6 +95,12 @@ void QThresholdPanel::EnableAdaptive()
     ui.sp_blocksize->setEnabled(true);
     ui.ThresholdTypeGroup->setEnabled(true);
     ui.AdaptiveTypeGroup->setEnabled(true);
+    ui.rb_otsu->setEnabled(false);
+    ui.rb_tozero->setEnabled(false);
+    ui.rb_tozero_inv->setEnabled(false);
+    ui.rb_triangle->setEnabled(false);
+    ui.rb_trunc->setEnabled(false);
+    ui.rb_mask->setEnabled(false);
 }
 
 void QThresholdPanel::DisableAll()
@@ -95,6 +122,27 @@ void QThresholdPanel::GetAllParameter()
     command_para->max = ui.dsp_max->value();
     command_para->constant = ui.dsp_constant->value();
     command_para->block_size = ui.sp_blocksize->value();
+
+    if(ui.rb_binary->isChecked())
+        command_para->threshold_type = THRESH_BINARY;
+    if(ui.rb_binary_inv->isChecked())
+        command_para->threshold_type = THRESH_BINARY_INV;
+    if(ui.rb_trunc->isChecked())
+        command_para->threshold_type = THRESH_TRUNC;
+    if(ui.rb_tozero->isChecked())
+        command_para->threshold_type = THRESH_TOZERO;
+    if(ui.rb_tozero_inv->isChecked())
+        command_para->threshold_type = THRESH_TOZERO_INV;
+    if(ui.rb_mask->isChecked())
+        command_para->threshold_type = THRESH_MASK;
+    if(ui.rb_otsu->isChecked())
+        command_para->threshold_type = THRESH_OTSU;
+    if(ui.rb_triangle->isChecked())
+        command_para->threshold_type = THRESH_TRIANGLE;
+    if(ui.rb_mean_c->isChecked())
+        command_para->adaptive_type = ADAPTIVE_THRESH_MEAN_C;
+    if(ui.rb_gaussian_c->isChecked())
+        command_para->adaptive_type = ADAPTIVE_THRESH_GAUSSIAN_C;
 }
 
 ThresholdTypes QThresholdPanel::GetThresholdType()

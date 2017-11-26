@@ -13,6 +13,7 @@ class QCommandBuilder;
 class QVCVUndoCommand;
 class QImageProcCommand;
 class QCustomFilterDlg;
+class QThresholdPanel;
 
 #define SCROLLBAR_SIZE 20
 
@@ -32,6 +33,7 @@ public:
 
     QFilterPanel* GetFilterPanel(VCV_IMAGE_OPERATION operation);
     QCustomFilterDlg* GetCustomFilterPanel();
+    QThresholdPanel* GetThresholdPanel(VCV_IMAGE_OPERATION operation);
 
 public slots:
     void FilterParameterChangeRespond(const CommandParameter *para);
@@ -40,6 +42,9 @@ public slots:
     void CustomFilterParameterChange(const CommandParameter *para);
     void CustomFilterPanelOk(const CommandParameter *para);
     void CustomFilterPanelCancel(const CommandParameter *para);
+    void ThresholdParameterChange(const CommandParameter *para);
+    void ThresholdPanelOk(const CommandParameter *para);
+    void ThresholdPanelCancel(const CommandParameter *para);
 protected slots:
 	void VScrollBarRangeChanged(int min, int max);
 	void HScrollBarRangeChanged(int min, int max);
@@ -57,10 +62,12 @@ protected:
 
     QFilterPanel *filter_panel;
     QCustomFilterDlg *customfilter_panel;
+    QThresholdPanel *threshold_panel;
 
     QCommandBuilder *command_builder;
     QImageProcCommand *filter_command;
     QImageProcCommand *custom_filter_command;
+    QImageProcCommand *threshold_command;
     QVCVData *operator_data;
 
 	int image_top;

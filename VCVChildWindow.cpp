@@ -4,12 +4,14 @@
 #include "ControlPanel.h"
 #include "FilterPanel.h"
 #include "CustomFilterDlg.h"
+#include "ThresholdPanel.h"
 #include "VCVData.h"
 #include "VCVDataModel.h"
 #include "DataModelInstance.h"
 #include "CommandInclude/CommandBuilder.h"
 #include "CommandInclude/VCVUndoCommand.h"
 #include "CommandInclude/ImageProcCommand.h"
+#include "CommandInclude/Threshold.h"
 #include "VCVChildWindow.h"
 
 QVCVChildWindow::QVCVChildWindow(QWidget *parent, Qt::WindowFlags f)
@@ -28,6 +30,7 @@ QVCVChildWindow::QVCVChildWindow(QWidget *parent, Qt::WindowFlags f)
     customfilter_panel = NULL;
     filter_command = NULL;
     custom_filter_command = NULL;
+    threshold_panel = NULL;
 
     connect(v_scrollbar,SIGNAL(valueChanged(int)),this,SLOT(repaint()));
     connect(h_scrollbar,SIGNAL(valueChanged(int)),this,SLOT(repaint()));
@@ -116,6 +119,25 @@ QCustomFilterDlg* QVCVChildWindow::GetCustomFilterPanel()
     return customfilter_panel;
 }
 
+QThresholdPanel* QVCVChildWindow::GetThresholdPanel(VCV_IMAGE_OPERATION operation)
+{
+    if(threshold_panel==NULL)
+    {
+        threshold_panel = new QThresholdPanel(this,Qt::WindowStaysOnTopHint);
+        if(threshold_panel==NULL)
+            return NULL;
+
+        connect(threshold_panel,SIGNAL(ParameterChange(const CommandParameter*)),this,SLOT(ThresholdParameterChange(const CommandParameter*)));
+        connect(threshold_panel,SIGNAL(PanelOk(const CommandParameter*)),this,SLOT(ThresholdPanelOk(const CommandParameter*)));
+        connect(threshold_panel,SIGNAL(PanelCancel(const CommandParameter*)),this,SLOT(ThresholdPanelCancel(const CommandParameter*)));
+    }
+
+    DoOperation(threshold_panel,(QVCVUndoCommand**)&threshold_command,operation);
+
+    return threshold_panel;
+
+}
+
 /////////////////////
 //slot function
 void QVCVChildWindow::FilterParameterChangeRespond(const CommandParameter *para)
@@ -135,7 +157,6 @@ void QVCVChildWindow::FilterParameterChangeRespond(const CommandParameter *para)
     }
 
     filter_command->redo();
-
 }
 
 void QVCVChildWindow::FilterPanelOk(const CommandParameter *para)
@@ -170,7 +191,6 @@ void QVCVChildWindow::FilterPanelCancel(const CommandParameter *para)
     filter_command->undo();
     delete filter_command;
     filter_command = NULL;
-
 }
 
 void QVCVChildWindow::CustomFilterParameterChange(const CommandParameter *para)
@@ -186,6 +206,21 @@ void QVCVChildWindow::CustomFilterPanelOk(const CommandParameter *para)
 void QVCVChildWindow::CustomFilterPanelCancel(const CommandParameter *para)
 {
     PanelCencel((QVCVUndoCommand**)&custom_filter_command,para);
+}
+
+void QVCVChildWindow::ThresholdParameterChange(const CommandParameter *para)
+{
+    PanelValueChange((QVCVUndoCommand*)threshold_command,para);
+}
+
+void QVCVChildWindow::ThresholdPanelOk(const CommandParameter *para)
+{
+    PanelOk((QVCVUndoCommand**)&threshold_command,para);
+}
+
+void QVCVChildWindow::ThresholdPanelCancel(const CommandParameter *para)
+{
+    PanelCencel((QVCVUndoCommand**)&threshold_command,para);
 }
 
 void QVCVChildWindow::VScrollBarRangeChanged(int min, int max)
