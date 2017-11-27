@@ -85,11 +85,18 @@ void QThresholdPanel::EnableThreshold()
     ui.dsp_thresh->setEnabled(true);
     ui.dsp_max->setEnabled(true);
     ui.ThresholdTypeGroup->setEnabled(true);
+    ui.rb_otsu->setEnabled(true);
+    ui.rb_tozero->setEnabled(true);
+    ui.rb_tozero_inv->setEnabled(true);
+    ui.rb_triangle->setEnabled(true);
+    ui.rb_trunc->setEnabled(true);
+    ui.rb_mask->setEnabled(true);
 }
 
 void QThresholdPanel::EnableAdaptive()
 {
     DisableAll();
+    ui.rb_binary->setChecked(true);
     ui.dsp_constant->setEnabled(true);
     ui.dsp_max->setEnabled(true);
     ui.sp_blocksize->setEnabled(true);
