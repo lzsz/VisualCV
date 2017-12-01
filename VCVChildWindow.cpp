@@ -5,6 +5,7 @@
 #include "FilterPanel.h"
 #include "CustomFilterDlg.h"
 #include "ThresholdPanel.h"
+#include "MorphologyPanel.h"
 #include "VCVData.h"
 #include "VCVDataModel.h"
 #include "DataModelInstance.h"
@@ -31,6 +32,8 @@ QVCVChildWindow::QVCVChildWindow(QWidget *parent, Qt::WindowFlags f)
     filter_command = NULL;
     custom_filter_command = NULL;
     threshold_panel = NULL;
+    threshold_command = NULL;
+    morphology_command = NULL;
 
     connect(v_scrollbar,SIGNAL(valueChanged(int)),this,SLOT(repaint()));
     connect(h_scrollbar,SIGNAL(valueChanged(int)),this,SLOT(repaint()));
@@ -135,7 +138,24 @@ QThresholdPanel* QVCVChildWindow::GetThresholdPanel(VCV_IMAGE_OPERATION operatio
     DoOperation(threshold_panel,(QVCVUndoCommand**)&threshold_command,operation);
 
     return threshold_panel;
+}
 
+QMorphologyPanel* QVCVChildWindow::GetMorphologyPanel(VCV_IMAGE_OPERATION operation)
+{
+    if(morphology_panel==NULL)
+    {
+        morphology_panel = new QMorphologyPanel(this,Qt::WindowStaysOnTopHint);
+        if(morphology_panel==NULL)
+            return NULL;
+
+        connect(morphology_panel,SIGNAL(ParameterChange(const CommandParameter*)),this,SLOT(MorphologyParameterChange(const CommandParameter*)));
+        connect(morphology_panel,SIGNAL(PanelOk(const CommandParameter*)),this,SLOT(MorphologyPanelOk(const CommandParameter*)));
+        connect(morphology_panel,SIGNAL(PanelCancel(const CommandParameter*)),this,SLOT(MorphologyPanelCancel(const CommandParameter*)));
+    }
+
+    DoOperation(morphology_panel,(QVCVUndoCommand**)&morphology_command,operation);
+
+    return morphology_panel;
 }
 
 /////////////////////
@@ -219,6 +239,21 @@ void QVCVChildWindow::ThresholdPanelOk(const CommandParameter *para)
 }
 
 void QVCVChildWindow::ThresholdPanelCancel(const CommandParameter *para)
+{
+    PanelCencel((QVCVUndoCommand**)&threshold_command,para);
+}
+
+void QVCVChildWindow::MorphologyParameterChange(const CommandParameter *para)
+{
+    PanelValueChange((QVCVUndoCommand*)morphology_command,para);
+}
+
+void QVCVChildWindow::MorphologyPanelOk(const CommandParameter *para)
+{
+    PanelOk((QVCVUndoCommand**)&morphology_command,para);
+}
+
+void QVCVChildWindow::MorphologyPanelCancel(const CommandParameter *para)
 {
     PanelCencel((QVCVUndoCommand**)&threshold_command,para);
 }
@@ -360,6 +395,8 @@ void QVCVChildWindow::DrawClient()
 
 void QVCVChildWindow::DoOperation(QControlPanel *panel,QVCVUndoCommand **command, VCV_IMAGE_OPERATION operation)
 {
+    if(command == NULL)
+        return;
     if(QDataModelInstance::Instance()->Count()<=0)
         return;
 

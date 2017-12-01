@@ -25,6 +25,7 @@ enum VCV_IMAGE_OPERATION
 	IMAGE_FILTER_CUSTOM2D,
 	IMAGE_FILTER_EROSION,
     IMAGE_FILTER_DILATION,
+    IMAGE_MORPH_OPEN,
 
     IMAGE_THRESHOLD_THRESHOLD,
     IMAGE_THRESHOLD_ADAPTIVE
@@ -60,6 +61,21 @@ public:
     int block_size;
     cv::ThresholdTypes threshold_type;
     cv::AdaptiveThresholdTypes adaptive_type;
+};
+
+class CommandParameter_Morphology : public CommandParameter
+{
+public:
+    int shape;
+    int ksize;
+    Point kernelAnchor;
+    Point anchor;
+    int iteration;
+    BorderTypes borderType;
+    int tp1;
+    int tp2;
+    int tp3;
+    int tp4;
 };
 
 #endif

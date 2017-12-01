@@ -14,6 +14,7 @@ class QVCVUndoCommand;
 class QImageProcCommand;
 class QCustomFilterDlg;
 class QThresholdPanel;
+class QMorphologyPanel;
 
 #define SCROLLBAR_SIZE 20
 
@@ -34,7 +35,7 @@ public:
     QFilterPanel* GetFilterPanel(VCV_IMAGE_OPERATION operation);
     QCustomFilterDlg* GetCustomFilterPanel();
     QThresholdPanel* GetThresholdPanel(VCV_IMAGE_OPERATION operation);
-
+    QMorphologyPanel* GetMorphologyPanel(VCV_IMAGE_OPERATION operation);
 public slots:
     void FilterParameterChangeRespond(const CommandParameter *para);
     void FilterPanelOk(const CommandParameter *para);
@@ -45,6 +46,9 @@ public slots:
     void ThresholdParameterChange(const CommandParameter *para);
     void ThresholdPanelOk(const CommandParameter *para);
     void ThresholdPanelCancel(const CommandParameter *para);
+    void MorphologyParameterChange(const CommandParameter *para);
+    void MorphologyPanelOk(const CommandParameter *para);
+    void MorphologyPanelCancel(const CommandParameter *para);
 protected slots:
 	void VScrollBarRangeChanged(int min, int max);
 	void HScrollBarRangeChanged(int min, int max);
@@ -63,11 +67,13 @@ protected:
     QFilterPanel *filter_panel;
     QCustomFilterDlg *customfilter_panel;
     QThresholdPanel *threshold_panel;
+    QMorphologyPanel *morphology_panel;
 
     QCommandBuilder *command_builder;
     QImageProcCommand *filter_command;
     QImageProcCommand *custom_filter_command;
     QImageProcCommand *threshold_command;
+    QImageProcCommand *morphology_command;
     QVCVData *operator_data;
 
 	int image_top;

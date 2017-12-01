@@ -43,6 +43,7 @@ private slots:
 	void CustomFilter2D();
 	void Erosion();
 	void Dilation();
+    void MorphologyOpen();
     void Threshold();
     void AdaptiveThreshold();
 
@@ -77,9 +78,9 @@ private:
 
     QAction *morphological_erosion;
     QAction *morphological_dilation;
+    QAction *morphological_open;
     QAction *morphological_threshold;
     QAction *morphological_adaptivethreshold;
-
 
 	QMdiArea *mdi_area;
 
@@ -94,6 +95,7 @@ private:
 
     void ShowFilterPanel(VCV_IMAGE_OPERATION operation);
     void ShowThresholdPanel(VCV_IMAGE_OPERATION operation);
+    void ShowMorphologicalPanel(VCV_IMAGE_OPERATION operation);
 };
 
 #endif

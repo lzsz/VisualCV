@@ -51,7 +51,7 @@ private:
 	QRadioButton *rb_transparent;
 	QRadioButton *rb_isolated;
 
-	VCV_IMAGE_OPERATION image_operation;
+    //VCV_IMAGE_OPERATION image_operation;
 
     CommandParameter_Filter *command_para;
 	void CreateBorderType();

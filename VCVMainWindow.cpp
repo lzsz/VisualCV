@@ -18,6 +18,7 @@
 #include "FilterPanel.h"
 #include "CustomFilterDlg.h"
 #include "ThresholdPanel.h"
+#include "MorphologyPanel.h"
 #include "NewDialog.h"
 
 #include "CommandInclude/CommandBuilder.h"
@@ -77,6 +78,7 @@ void QVCVMainWindow::CreateAction()
     filter_custom2d = new QAction(tr("CustomFilter2D"),this);
     morphological_erosion = new QAction(tr("Erosion"),this);
     morphological_dilation = new QAction(tr("Dilation"),this);
+    morphological_open = new QAction(tr("Open"),this);
     morphological_threshold = new QAction(tr("Threshold"),this);
     morphological_adaptivethreshold = new QAction(tr("AdaptiveThreshold"),this);
 }
@@ -109,6 +111,7 @@ void QVCVMainWindow::CreateMenu()
     filter_menu->addAction(filter_custom2d);
     morphological_menu->addAction(morphological_erosion);
     morphological_menu->addAction(morphological_dilation);
+    morphological_menu->addAction(morphological_open);
     morphological_menu->addAction(morphological_threshold);
     morphological_menu->addAction(morphological_adaptivethreshold);
 }
@@ -221,6 +224,11 @@ void QVCVMainWindow::Dilation()
     ShowFilterPanel(IMAGE_FILTER_DILATION);
 }
 
+void QVCVMainWindow::MorphologyOpen()
+{
+    ShowMorphologicalPanel(IMAGE_MORPH_OPEN);
+}
+
 void QVCVMainWindow::Threshold()
 {
     ShowThresholdPanel(IMAGE_THRESHOLD_THRESHOLD);
@@ -273,7 +281,16 @@ void QVCVMainWindow::ShowThresholdPanel(VCV_IMAGE_OPERATION operation)
     QThresholdPanel *thresholdpanel = ((QVCVChildWindow*)mdi_area->activeSubWindow()->widget())->GetThresholdPanel(operation);
     if(thresholdpanel!=NULL)
         thresholdpanel->show();
+}
 
+void QVCVMainWindow::ShowMorphologicalPanel(VCV_IMAGE_OPERATION operation)
+{
+    if(mdi_area->activeSubWindow()==NULL)
+        return;
+    QMorphologyPanel *moph_panel = ((QVCVChildWindow*)mdi_area->activeSubWindow()->widget())->GetMorphologyPanel(operation);
+
+    if(moph_panel!=NULL)
+        moph_panel->show();
 }
 
 void QVCVMainWindow::CreateConnection()
@@ -292,6 +309,7 @@ void QVCVMainWindow::CreateConnection()
     connect(filter_custom2d,SIGNAL(triggered()),this,SLOT(CustomFilter2D()));
     connect(morphological_erosion,SIGNAL(triggered()),this,SLOT(Erosion()));
     connect(morphological_dilation,SIGNAL(triggered()),this,SLOT(Dilation()));
+    connect(morphological_open,SIGNAL(triggered()),this,SLOT(MorphologyOpen()));
     connect(morphological_threshold,SIGNAL(triggered()),this,SLOT(Threshold()));
     connect(morphological_adaptivethreshold,SIGNAL(triggered()),this,SLOT(AdaptiveThreshold()));
 

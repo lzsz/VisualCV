@@ -34,8 +34,8 @@ QThresholdPanel::~QThresholdPanel()
 
 void QThresholdPanel::BeginOperation(VCV_IMAGE_OPERATION operation)
 {
-    image_operation = operation;
-    switch(image_operation)
+//    image_operation = operation;
+    switch(operation)
     {
     case IMAGE_THRESHOLD_THRESHOLD:
         EnableThreshold();
@@ -46,12 +46,14 @@ void QThresholdPanel::BeginOperation(VCV_IMAGE_OPERATION operation)
     default:
         break;
     }
+
+    QControlPanel::SetOperation(operation);
 }
 
 void QThresholdPanel::EndOperation(VCV_IMAGE_OPERATION operation)
 {
     DisableAll();
-    image_operation = IMAGE_NONE;
+    SetOperation(IMAGE_NONE);
 }
 
 void QThresholdPanel::ValueChange()

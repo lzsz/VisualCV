@@ -1,8 +1,15 @@
 #ifndef CONTROLPANEL_H
 #define CONTROLPANEL_H
 
+#include "opencv/cv.h"
 #include <QWidget>
 #include "SystemDefine.h"
+
+class QRadioButton;
+class QGroupBox;
+class QGridLayout;
+
+using namespace cv;
 
 class QControlPanel : public QWidget
 {
@@ -26,6 +33,24 @@ signals:
 protected:
     virtual void GetAllParameter();
 
+    void CreateBorderGroup(QGroupBox* groupbox);
+    BorderTypes GetBorderType();
+
+    void SetOperation(VCV_IMAGE_OPERATION oper);
+    VCV_IMAGE_OPERATION GetOperation();
+private:
+    bool is_bordertype_init;
+    QRadioButton *rb_default;
+    QRadioButton *rb_wrap;
+    QRadioButton *rb_replicate;
+    QRadioButton *rb_reflect;
+    QRadioButton *rb_reflect101;
+    QRadioButton *rb_constant;
+    QRadioButton *rb_transparent;
+    QRadioButton *rb_isolated;
+    QGridLayout *radiobutton_layout;
+
+    VCV_IMAGE_OPERATION image_operation;
 };
 
 #endif // CONTROLPANEL_H

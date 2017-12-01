@@ -113,7 +113,7 @@ int QFilterPanel::GetBorderType()
 
 void QFilterPanel::BeginOperation(VCV_IMAGE_OPERATION operation)
 {
-    image_operation = operation;
+    //image_operation = operation;
 	switch(operation)
 	{
 	case IMAGE_FILTER_BLUR:
@@ -137,6 +137,7 @@ void QFilterPanel::BeginOperation(VCV_IMAGE_OPERATION operation)
 	default:
 		break ;
 	}
+    QControlPanel::SetOperation(operation);
 }
 
 void QFilterPanel::EndOperation(VCV_IMAGE_OPERATION operation)
@@ -165,7 +166,7 @@ void QFilterPanel::EndOperation(VCV_IMAGE_OPERATION operation)
 		break ;
 	}
 
-	image_operation = IMAGE_NONE;
+    SetOperation(IMAGE_NONE);
 }
 
 void QFilterPanel::ValueChange()
@@ -177,7 +178,7 @@ void QFilterPanel::ValueChange()
 
 void QFilterPanel::PushOk()
 {
-	EndOperation(image_operation);
+    EndOperation(GetOperation());
 
 	GetAllParameter();
 
@@ -186,7 +187,7 @@ void QFilterPanel::PushOk()
 
 void QFilterPanel::PushCancel()
 {
-	EndOperation(image_operation);
+    EndOperation(GetOperation());
 
 	GetAllParameter();
 
