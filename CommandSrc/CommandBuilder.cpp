@@ -7,6 +7,7 @@
 #include "CommandInclude/Erosion.h"
 #include "CommandInclude/Dilation.h"
 #include "CommandInclude/Threshold.h"
+#include "CommandInclude/Morphology.h"
 
 #include "CommandInclude/CommandBuilder.h"
 
@@ -43,6 +44,8 @@ QVCVUndoCommand* QCommandBuilder::CreateCommand(VCV_IMAGE_OPERATION operation)
         return new QThreshold;
     case IMAGE_THRESHOLD_ADAPTIVE:
         return new QAdaptiveThreshold;
+    case IMAGE_MORPHOLOGY:
+        return new QMorphology;
 	default:
 		return NULL;
 	}

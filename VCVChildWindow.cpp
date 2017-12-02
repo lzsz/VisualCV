@@ -33,6 +33,7 @@ QVCVChildWindow::QVCVChildWindow(QWidget *parent, Qt::WindowFlags f)
     custom_filter_command = NULL;
     threshold_panel = NULL;
     threshold_command = NULL;
+    morphology_panel = NULL;
     morphology_command = NULL;
 
     connect(v_scrollbar,SIGNAL(valueChanged(int)),this,SLOT(repaint()));
@@ -52,6 +53,16 @@ QVCVChildWindow::~QVCVChildWindow()
     {
         delete customfilter_panel;
         customfilter_panel = NULL;
+    }
+    if(threshold_panel != NULL)
+    {
+        delete threshold_panel;
+        threshold_panel = NULL;
+    }
+    if(morphology_panel!=NULL)
+    {
+        delete morphology_panel;
+        morphology_panel = NULL;
     }
 }
 
@@ -397,6 +408,7 @@ void QVCVChildWindow::DoOperation(QControlPanel *panel,QVCVUndoCommand **command
 {
     if(command == NULL)
         return;
+
     if(QDataModelInstance::Instance()->Count()<=0)
         return;
 

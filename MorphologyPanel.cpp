@@ -7,6 +7,21 @@ QMorphologyPanel::QMorphologyPanel(QWidget *parent, Qt::WindowFlags f)
     setWindowFlags(f);
     command_para = new CommandParameter_Morphology;
     CreateBorderGroup(ui.groupBox);
+
+    connect(ui.pb_ok,SIGNAL(clicked(bool)),this,SLOT(PushOk()));
+    connect(ui.pb_cancel,SIGNAL(clicked(bool)),this,SLOT(PushCancel()));
+    connect(ui.cb_op,SIGNAL(currentIndexChanged(int)),this,SLOT(ValueChange()));
+    connect(ui.cb_morphshape,SIGNAL(currentIndexChanged(int)),this,SLOT(ValueChange()));
+    connect(ui.sp_kernelsize,SIGNAL(valueChanged(int)),this,SLOT(ValueChange()));
+    connect(ui.sp_anchorx,SIGNAL(valueChanged(int)),this,SLOT(ValueChange()));
+    connect(ui.sp_anchory,SIGNAL(valueChanged(int)),this,SLOT(ValueChange()));
+    connect(ui.sp_kernelanchorx,SIGNAL(valueChanged(int)),this,SLOT(ValueChange()));
+    connect(ui.sp_kernelanchory,SIGNAL(valueChanged(int)),this,SLOT(ValueChange()));
+    connect(ui.sp_iterations,SIGNAL(valueChanged(int)),this,SLOT(ValueChange()));
+    connect(ui.sp_tp1,SIGNAL(valueChanged(int)),this,SLOT(ValueChange()));
+    connect(ui.sp_tp2,SIGNAL(valueChanged(int)),this,SLOT(ValueChange()));
+    connect(ui.sp_tp3,SIGNAL(valueChanged(int)),this,SLOT(ValueChange()));
+    connect(ui.sp_tp4,SIGNAL(valueChanged(int)),this,SLOT(ValueChange()));
 }
 
 QMorphologyPanel::~QMorphologyPanel()
@@ -24,6 +39,8 @@ void QMorphologyPanel::BeginOperation(VCV_IMAGE_OPERATION operation)
 void QMorphologyPanel::EndOperation(VCV_IMAGE_OPERATION operation)
 {
 //    DisableAll();
+
+    SetOperation(IMAGE_NONE);
 }
 
 void QMorphologyPanel::ValueChange()
@@ -53,6 +70,37 @@ void QMorphologyPanel::GetAllParameter()
     command_para->kernelAnchor.x = ui.sp_kernelanchorx->value();
     command_para->kernelAnchor.y = ui.sp_kernelanchory->value();
     command_para->ksize = ui.sp_kernelsize->value();
+
+    switch(ui.cb_op->currentIndex())
+    {
+    case 0:
+        command_para->op = MORPH_ERODE;
+        break;
+    case 1:
+        command_para->op = MORPH_DILATE;
+        break;
+    case 2:
+        command_para->op = MORPH_OPEN;
+        break;
+    case 3:
+        command_para->op = MORPH_CLOSE;
+        break;
+    case 4:
+        command_para->op = MORPH_GRADIENT;
+        break;
+    case 5:
+        command_para->op = MORPH_TOPHAT;
+        break;
+    case 6:
+        command_para->op = MORPH_BLACKHAT;
+        break;
+    case 7:
+        command_para->op = MORPH_HITMISS;
+        break;
+    default:
+        command_para->op = MORPH_ERODE;
+        break;
+    }
 
     switch(ui.cb_morphshape->currentIndex())
     {

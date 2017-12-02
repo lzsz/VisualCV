@@ -15,6 +15,8 @@ public:
     bool Initialize(QVCVData *data, const CommandParameter* para);
     virtual bool SetParameter(const CommandParameter *para);
 
+    virtual void undo();
+
 protected:
     Mat original_image;
 	Mat final_image;

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>602</width>
-    <height>406</height>
+    <height>437</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,48 +18,116 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
+       <item row="1" column="0">
         <widget class="QLabel" name="label">
          <property name="text">
           <string>Kernel shape</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
-        <widget class="QSpinBox" name="sp_kernelanchorx"/>
+       <item row="4" column="1">
+        <widget class="QSpinBox" name="sp_kernelanchory">
+         <property name="minimum">
+          <number>-1</number>
+         </property>
+         <property name="value">
+          <number>-1</number>
+         </property>
+        </widget>
        </item>
-       <item row="2" column="0">
+       <item row="6" column="0">
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>Anchor Y</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QSpinBox" name="sp_tp1"/>
+       </item>
+       <item row="9" column="0">
+        <widget class="QLabel" name="label_9">
+         <property name="text">
+          <string>BorderValue _Tp2</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QSpinBox" name="sp_iterations">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="label_7">
+         <property name="text">
+          <string>Iterations</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <widget class="QLabel" name="label_8">
+         <property name="text">
+          <string>BorderValue _Tp1</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="1">
+        <widget class="QSpinBox" name="sp_tp3"/>
+       </item>
+       <item row="6" column="1">
+        <widget class="QSpinBox" name="sp_anchory">
+         <property name="minimum">
+          <number>-1</number>
+         </property>
+         <property name="value">
+          <number>-1</number>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QSpinBox" name="sp_kernelanchorx">
+         <property name="minimum">
+          <number>-1</number>
+         </property>
+         <property name="value">
+          <number>-1</number>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
         <widget class="QLabel" name="label_3">
          <property name="text">
           <string>Kernel Anchor X</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
+       <item row="2" column="0">
         <widget class="QLabel" name="label_2">
          <property name="text">
           <string>Kernel size</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
+       <item row="4" column="0">
         <widget class="QLabel" name="label_4">
          <property name="text">
           <string>Kernel Anchor Y</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="0">
+       <item row="5" column="0">
         <widget class="QLabel" name="label_5">
          <property name="text">
           <string>Anchor X</string>
          </property>
         </widget>
        </item>
-       <item row="8" column="1">
+       <item row="9" column="1">
         <widget class="QSpinBox" name="sp_tp2"/>
        </item>
-       <item row="0" column="1">
+       <item row="1" column="1">
         <widget class="QComboBox" name="cb_morphshape">
          <item>
           <property name="text">
@@ -78,71 +146,93 @@
          </item>
         </widget>
        </item>
-       <item row="1" column="1">
-        <widget class="QSpinBox" name="sp_kernelsize"/>
-       </item>
-       <item row="3" column="1">
-        <widget class="QSpinBox" name="sp_kernelanchory"/>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="label_6">
-         <property name="text">
-          <string>Anchor Y</string>
+       <item row="2" column="1">
+        <widget class="QSpinBox" name="sp_kernelsize">
+         <property name="minimum">
+          <number>3</number>
+         </property>
+         <property name="singleStep">
+          <number>2</number>
          </property>
         </widget>
-       </item>
-       <item row="7" column="1">
-        <widget class="QSpinBox" name="sp_tp1"/>
-       </item>
-       <item row="8" column="0">
-        <widget class="QLabel" name="label_9">
-         <property name="text">
-          <string>BorderValue _Tp2</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <widget class="QSpinBox" name="sp_iterations"/>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="label_7">
-         <property name="text">
-          <string>Iterations</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="label_8">
-         <property name="text">
-          <string>BorderValue _Tp1</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="1">
-        <widget class="QSpinBox" name="sp_tp3"/>
        </item>
        <item row="5" column="1">
-        <widget class="QSpinBox" name="sp_anchory"/>
+        <widget class="QSpinBox" name="sp_anchorx">
+         <property name="minimum">
+          <number>-1</number>
+         </property>
+         <property name="value">
+          <number>-1</number>
+         </property>
+        </widget>
        </item>
-       <item row="4" column="1">
-        <widget class="QSpinBox" name="sp_anchorx"/>
-       </item>
-       <item row="9" column="0">
+       <item row="10" column="0">
         <widget class="QLabel" name="label_10">
          <property name="text">
           <string>BorderValue _Tp3</string>
          </property>
         </widget>
        </item>
-       <item row="10" column="0">
+       <item row="11" column="0">
         <widget class="QLabel" name="label_11">
          <property name="text">
           <string>BorderValue _Tp4</string>
          </property>
         </widget>
        </item>
-       <item row="10" column="1">
+       <item row="11" column="1">
         <widget class="QSpinBox" name="sp_tp4"/>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_12">
+         <property name="text">
+          <string>Operation</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="cb_op">
+         <item>
+          <property name="text">
+           <string>ERODE</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>DILATE</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>OPEN</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>CLOSE</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>GRADIENT</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>TOPHAT</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>BLACKHAT</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>HITMISS</string>
+          </property>
+         </item>
+        </widget>
        </item>
       </layout>
      </item>

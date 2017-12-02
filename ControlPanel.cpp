@@ -120,7 +120,7 @@ void QControlPanel::CreateBorderGroup(QGroupBox *groupbox)
     if(rb_isolated==NULL)
     {
         rb_isolated = new QRadioButton("BORDER_ISOLATE");
-        connect(rb_isolated,SIGNAL(clicked(bool)),this,SLOT(close()));
+        connect(rb_isolated,SIGNAL(clicked(bool)),this,SLOT(ValueChange()));
     }
     if(radiobutton_layout==NULL)
         radiobutton_layout = new QGridLayout;

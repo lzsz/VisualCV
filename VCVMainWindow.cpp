@@ -78,7 +78,7 @@ void QVCVMainWindow::CreateAction()
     filter_custom2d = new QAction(tr("CustomFilter2D"),this);
     morphological_erosion = new QAction(tr("Erosion"),this);
     morphological_dilation = new QAction(tr("Dilation"),this);
-    morphological_open = new QAction(tr("Open"),this);
+    morphological_open = new QAction(tr("Morphology"),this);
     morphological_threshold = new QAction(tr("Threshold"),this);
     morphological_adaptivethreshold = new QAction(tr("AdaptiveThreshold"),this);
 }
@@ -226,7 +226,7 @@ void QVCVMainWindow::Dilation()
 
 void QVCVMainWindow::MorphologyOpen()
 {
-    ShowMorphologicalPanel(IMAGE_MORPH_OPEN);
+    ShowMorphologicalPanel(IMAGE_MORPHOLOGY);
 }
 
 void QVCVMainWindow::Threshold()

@@ -40,3 +40,11 @@ bool QImageProcCommand::SetParameter(const CommandParameter *para)
 {
 	return false;
 }
+
+void QImageProcCommand::undo()
+{
+    if(!initialization)
+        return;
+
+    connection_data->SetDisplayImage(original_image);
+}

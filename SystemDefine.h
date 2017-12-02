@@ -25,7 +25,7 @@ enum VCV_IMAGE_OPERATION
 	IMAGE_FILTER_CUSTOM2D,
 	IMAGE_FILTER_EROSION,
     IMAGE_FILTER_DILATION,
-    IMAGE_MORPH_OPEN,
+    IMAGE_MORPHOLOGY,
 
     IMAGE_THRESHOLD_THRESHOLD,
     IMAGE_THRESHOLD_ADAPTIVE
@@ -66,6 +66,7 @@ public:
 class CommandParameter_Morphology : public CommandParameter
 {
 public:
+    int op;
     int shape;
     int ksize;
     Point kernelAnchor;
