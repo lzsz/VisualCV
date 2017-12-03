@@ -50,6 +50,8 @@ private slots:
 	void ZoomIn();
 	void ZoomOut();
 	void NormalSize();
+
+    void slotAboutDialog();
 private:
 	QMenu *file_menu;
 	QMenu *view_menu;
@@ -81,6 +83,8 @@ private:
     QAction *morphological_open;
     QAction *morphological_threshold;
     QAction *morphological_adaptivethreshold;
+
+    QAction *about;
 
 	QMdiArea *mdi_area;
 

@@ -20,6 +20,7 @@
 #include "ThresholdPanel.h"
 #include "MorphologyPanel.h"
 #include "NewDialog.h"
+#include "AboutDialog.h"
 
 #include "CommandInclude/CommandBuilder.h"
 #include "CommandInclude/VCVUndoCommand.h"
@@ -81,6 +82,8 @@ void QVCVMainWindow::CreateAction()
     morphological_open = new QAction(tr("Morphology"),this);
     morphological_threshold = new QAction(tr("Threshold"),this);
     morphological_adaptivethreshold = new QAction(tr("AdaptiveThreshold"),this);
+
+    about = new QAction(tr("About"),this);
 }
 
 void QVCVMainWindow::CreateMenu()
@@ -114,6 +117,8 @@ void QVCVMainWindow::CreateMenu()
     morphological_menu->addAction(morphological_open);
     morphological_menu->addAction(morphological_threshold);
     morphological_menu->addAction(morphological_adaptivethreshold);
+
+    help_menu->addAction(about);
 }
 
 void QVCVMainWindow::WindowActive(QMdiSubWindow *subwin)
@@ -319,4 +324,12 @@ void QVCVMainWindow::CreateConnection()
 
     connect(view_tile,SIGNAL(triggered()),mdi_area,SLOT(tileSubWindows()));
     connect(view_cascade,SIGNAL(triggered()),mdi_area,SLOT(cascadeSubWindows()));
+
+    connect(about,SIGNAL(triggered(bool)),this,SLOT(slotAboutDialog()));
+}
+
+void QVCVMainWindow::slotAboutDialog()
+{
+    AboutDialog about;
+    about.exec();
 }
