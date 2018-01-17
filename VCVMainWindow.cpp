@@ -19,6 +19,7 @@
 #include "CustomFilterDlg.h"
 #include "ThresholdPanel.h"
 #include "MorphologyPanel.h"
+#include "edgedetectionpanel.h"
 #include "NewDialog.h"
 #include "AboutDialog.h"
 
@@ -82,6 +83,9 @@ void QVCVMainWindow::CreateAction()
     morphological_open = new QAction(tr("Morphology"),this);
     morphological_threshold = new QAction(tr("Threshold"),this);
     morphological_adaptivethreshold = new QAction(tr("AdaptiveThreshold"),this);
+    edge_laplaction = new QAction(tr("Laplacian"),this);
+    edge_sobel = new QAction(tr("Sobel"),this);
+    edge_canny = new QAction(tr("Canny"),this);
 
     about = new QAction(tr("About"),this);
 }
@@ -93,6 +97,7 @@ void QVCVMainWindow::CreateMenu()
     view_menu = menuBar()->addMenu(tr("&View"));
     filter_menu =  menuBar()->addMenu(tr("&Filter"));
     morphological_menu = menuBar()->addMenu(tr("Morphological"));
+    edge_menu = menuBar()->addMenu(tr("EdgeDetection"));
     help_menu = menuBar()->addMenu(tr("&Help"));
 
     file_menu->addAction(file_menu_new);
@@ -117,6 +122,9 @@ void QVCVMainWindow::CreateMenu()
     morphological_menu->addAction(morphological_open);
     morphological_menu->addAction(morphological_threshold);
     morphological_menu->addAction(morphological_adaptivethreshold);
+    edge_menu->addAction(edge_laplaction);
+    edge_menu->addAction(edge_sobel);
+    edge_menu->addAction(edge_canny);
 
     help_menu->addAction(about);
 }
@@ -244,6 +252,21 @@ void QVCVMainWindow::AdaptiveThreshold()
     ShowThresholdPanel(IMAGE_THRESHOLD_ADAPTIVE);
 }
 
+void QVCVMainWindow::Laplacian_action()
+{
+    ShowEdgeDetectionPanel(IMAGE_EDGE_LAPLACIAN);
+}
+
+void QVCVMainWindow::Sobel_action()
+{
+    ShowEdgeDetectionPanel(IMAGE_EDGE_SOBEL);
+}
+
+void QVCVMainWindow::Canny_action()
+{
+    ShowEdgeDetectionPanel(IMAGE_EDGE_CANNY);
+}
+
 void QVCVMainWindow::ZoomIn()
 {
     if(mdi_area->activeSubWindow()!=NULL)
@@ -298,6 +321,15 @@ void QVCVMainWindow::ShowMorphologicalPanel(VCV_IMAGE_OPERATION operation)
         moph_panel->show();
 }
 
+void QVCVMainWindow::ShowEdgeDetectionPanel(VCV_IMAGE_OPERATION operation)
+{
+    if(mdi_area->activeSubWindow()==NULL)
+        return;
+    QEdgeDetectionPanel *edge_panel = ((QVCVChildWindow*)mdi_area->activeSubWindow()->widget())->GetEdgeDetectionPanel(operation);
+    if(edge_panel!=NULL)
+        edge_panel->show();
+}
+
 void QVCVMainWindow::CreateConnection()
 {
     connect(file_menu_new,SIGNAL(triggered()),this,SLOT(New()));
@@ -317,6 +349,9 @@ void QVCVMainWindow::CreateConnection()
     connect(morphological_open,SIGNAL(triggered()),this,SLOT(MorphologyOpen()));
     connect(morphological_threshold,SIGNAL(triggered()),this,SLOT(Threshold()));
     connect(morphological_adaptivethreshold,SIGNAL(triggered()),this,SLOT(AdaptiveThreshold()));
+    connect(edge_laplaction,SIGNAL(triggered()),this,SLOT(Laplacian_action()));
+    connect(edge_sobel,SIGNAL(triggered()),this,SLOT(Sobel_action()));
+    connect(edge_canny,SIGNAL(triggered()),this,SLOT(Canny_action()));
 
     connect(view_zoomin,SIGNAL(triggered()),this,SLOT(ZoomIn()));
     connect(view_zoomout,SIGNAL(triggered()),this,SLOT(ZoomOut()));

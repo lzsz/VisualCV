@@ -6,6 +6,7 @@
 #include "CustomFilterDlg.h"
 #include "ThresholdPanel.h"
 #include "MorphologyPanel.h"
+#include "edgedetectionpanel.h"
 #include "VCVData.h"
 #include "VCVDataModel.h"
 #include "DataModelInstance.h"
@@ -167,6 +168,18 @@ QMorphologyPanel* QVCVChildWindow::GetMorphologyPanel(VCV_IMAGE_OPERATION operat
     DoOperation(morphology_panel,(QVCVUndoCommand**)&morphology_command,operation);
 
     return morphology_panel;
+}
+
+QEdgeDetectionPanel* QVCVChildWindow::GetEdgeDetectionPanel(VCV_IMAGE_OPERATION operation)
+{
+    if(edgedetection_panel==NULL)
+    {
+        edgedetection_panel = new QEdgeDetectionPanel(this,Qt::WindowStaysOnTopHint);
+        if(edgedetection_panel==NULL)
+            return NULL;
+    }
+
+    return edgedetection_panel;
 }
 
 /////////////////////

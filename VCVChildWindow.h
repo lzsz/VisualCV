@@ -15,6 +15,7 @@ class QImageProcCommand;
 class QCustomFilterDlg;
 class QThresholdPanel;
 class QMorphologyPanel;
+class QEdgeDetectionPanel;
 
 #define SCROLLBAR_SIZE 20
 
@@ -36,6 +37,7 @@ public:
     QCustomFilterDlg* GetCustomFilterPanel();
     QThresholdPanel* GetThresholdPanel(VCV_IMAGE_OPERATION operation);
     QMorphologyPanel* GetMorphologyPanel(VCV_IMAGE_OPERATION operation);
+    QEdgeDetectionPanel* GetEdgeDetectionPanel(VCV_IMAGE_OPERATION operation);
 public slots:
     void FilterParameterChangeRespond(const CommandParameter *para);
     void FilterPanelOk(const CommandParameter *para);
@@ -68,6 +70,7 @@ protected:
     QCustomFilterDlg *customfilter_panel;
     QThresholdPanel *threshold_panel;
     QMorphologyPanel *morphology_panel;
+    QEdgeDetectionPanel *edgedetection_panel;
 
     QCommandBuilder *command_builder;
     QImageProcCommand *filter_command;

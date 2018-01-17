@@ -28,7 +28,11 @@ enum VCV_IMAGE_OPERATION
     IMAGE_MORPHOLOGY,
 
     IMAGE_THRESHOLD_THRESHOLD,
-    IMAGE_THRESHOLD_ADAPTIVE
+    IMAGE_THRESHOLD_ADAPTIVE,
+
+    IMAGE_EDGE_LAPLACIAN,
+    IMAGE_EDGE_SOBEL,
+    IMAGE_EDGE_CANNY
 };
 
 class CommandParameter
@@ -77,6 +81,20 @@ public:
     int tp2;
     int tp3;
     int tp4;
+};
+
+class CommandParameter_Edge : public CommandParameter
+{
+public:
+    int ddepth;
+    int ksize;
+    int dx;
+    int dy;
+    BorderTypes bordertype;
+    int aperturesize;
+    bool l2gradient;
+    double scale;
+    double delta;
 };
 
 #endif

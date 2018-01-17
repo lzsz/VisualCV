@@ -54,17 +54,24 @@ void QControlPanel::EndOperation(VCV_IMAGE_OPERATION operation)
 
 void QControlPanel::ValueChange()
 {
+    GetAllParameter();
 
+    emit ParameterChange(command_para);
 }
 
 void QControlPanel::PushOk()
 {
+    EndOperation(GetOperation());
 
+    GetAllParameter();
+    emit PanelOk(command_para);
 }
 
 void QControlPanel::PushCancel()
 {
-
+    EndOperation(GetOperation());
+    GetAllParameter();
+    emit PanelCancel(command_para);
 }
 
 void QControlPanel::GetAllParameter()

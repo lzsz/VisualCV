@@ -46,6 +46,9 @@ private slots:
     void MorphologyOpen();
     void Threshold();
     void AdaptiveThreshold();
+    void Laplacian_action();
+    void Sobel_action();
+    void Canny_action();
 
 	void ZoomIn();
 	void ZoomOut();
@@ -60,6 +63,7 @@ private:
 
 	QMenu *filter_menu;
     QMenu *morphological_menu;
+    QMenu *edge_menu;
 
 	QAction *file_menu_new;
 	QAction *file_menu_open;
@@ -84,6 +88,10 @@ private:
     QAction *morphological_threshold;
     QAction *morphological_adaptivethreshold;
 
+    QAction *edge_laplaction;
+    QAction *edge_sobel;
+    QAction *edge_canny;
+
     QAction *about;
 
 	QMdiArea *mdi_area;
@@ -100,6 +108,7 @@ private:
     void ShowFilterPanel(VCV_IMAGE_OPERATION operation);
     void ShowThresholdPanel(VCV_IMAGE_OPERATION operation);
     void ShowMorphologicalPanel(VCV_IMAGE_OPERATION operation);
+    void ShowEdgeDetectionPanel(VCV_IMAGE_OPERATION operation);
 };
 
 #endif

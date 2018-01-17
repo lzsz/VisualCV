@@ -8,6 +8,7 @@
 class QRadioButton;
 class QGroupBox;
 class QGridLayout;
+class CommandParameter;
 
 using namespace cv;
 
@@ -31,6 +32,7 @@ signals:
     void PanelCancel(const CommandParameter *para);
 
 protected:
+    CommandParameter *command_para;
     virtual void GetAllParameter();
 
     void CreateBorderGroup(QGroupBox* groupbox);
