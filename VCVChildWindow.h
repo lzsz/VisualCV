@@ -51,6 +51,9 @@ public slots:
     void MorphologyParameterChange(const CommandParameter *para);
     void MorphologyPanelOk(const CommandParameter *para);
     void MorphologyPanelCancel(const CommandParameter *para);
+    void EdgeDetectionParameterChange(const CommandParameter *para);
+    void EdgeDetectionPanelOk(const CommandParameter *para);
+    void EdgeDetectionPanelCancel(const CommandParameter *para);
 protected slots:
 	void VScrollBarRangeChanged(int min, int max);
 	void HScrollBarRangeChanged(int min, int max);
