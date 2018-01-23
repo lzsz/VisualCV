@@ -36,7 +36,11 @@
         </widget>
        </item>
        <item row="4" column="1">
-        <widget class="QDoubleSpinBox" name="dsp_scale"/>
+        <widget class="QDoubleSpinBox" name="dsp_scale">
+         <property name="minimum">
+          <double>1.000000000000000</double>
+         </property>
+        </widget>
        </item>
        <item row="6" column="0">
         <widget class="QLabel" name="label_7">
@@ -46,7 +50,14 @@
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QSpinBox" name="sp_ksize"/>
+        <widget class="QSpinBox" name="sp_ksize">
+         <property name="minimum">
+          <number>3</number>
+         </property>
+         <property name="singleStep">
+          <number>2</number>
+         </property>
+        </widget>
        </item>
        <item row="3" column="0">
         <widget class="QLabel" name="label_4">
@@ -80,13 +91,24 @@
         <widget class="QSpinBox" name="sp_dx"/>
        </item>
        <item row="0" column="1">
-        <widget class="QSpinBox" name="sp_depth"/>
+        <widget class="QSpinBox" name="sp_depth">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+        </widget>
        </item>
        <item row="5" column="1">
         <widget class="QDoubleSpinBox" name="dsp_delta"/>
        </item>
        <item row="6" column="1">
-        <widget class="QSpinBox" name="sp_aperturesize"/>
+        <widget class="QSpinBox" name="sp_aperturesize">
+         <property name="minimum">
+          <number>3</number>
+         </property>
+         <property name="singleStep">
+          <number>2</number>
+         </property>
+        </widget>
        </item>
        <item row="7" column="0">
         <widget class="QLabel" name="label_8">

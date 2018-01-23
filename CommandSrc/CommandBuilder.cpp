@@ -8,6 +8,7 @@
 #include "CommandInclude/Dilation.h"
 #include "CommandInclude/Threshold.h"
 #include "CommandInclude/Morphology.h"
+#include "CommandInclude/edgedetection.h"
 
 #include "CommandInclude/CommandBuilder.h"
 
@@ -46,6 +47,12 @@ QVCVUndoCommand* QCommandBuilder::CreateCommand(VCV_IMAGE_OPERATION operation)
         return new QAdaptiveThreshold;
     case IMAGE_MORPHOLOGY:
         return new QMorphology;
+    case IMAGE_EDGE_LAPLACIAN:
+        return new QLaplaction;
+    case IMAGE_EDGE_SOBEL:
+        return new QSobel;
+    case IMAGE_EDGE_CANNY:
+        return new QCanny;
 	default:
 		return NULL;
 	}

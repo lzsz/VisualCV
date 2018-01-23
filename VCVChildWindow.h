@@ -80,6 +80,7 @@ protected:
     QImageProcCommand *custom_filter_command;
     QImageProcCommand *threshold_command;
     QImageProcCommand *morphology_command;
+    QImageProcCommand *edgedetection_command;
     QVCVData *operator_data;
 
 	int image_top;

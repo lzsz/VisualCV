@@ -5,6 +5,20 @@ QEdgeDetectionPanel::QEdgeDetectionPanel(QWidget *parent, Qt::WindowFlags f)
 {
     ui.setupUi(this);
     command_para = new CommandParameter_Edge;
+
+    setWindowFlags(f);
+
+    connect(ui.sp_depth,SIGNAL(valueChanged(int)),this,SLOT(ValueChange()));
+    connect(ui.sp_ksize,SIGNAL(valueChanged(int)),this,SLOT(ValueChange()));
+    connect(ui.sp_dx,SIGNAL(valueChanged(int)),this,SLOT(ValueChange()));
+    connect(ui.sp_dy,SIGNAL(valueChanged(int)),this,SLOT(ValueChange()));
+    connect(ui.sp_aperturesize,SIGNAL(valueChanged(int)),this,SLOT(ValueChange()));
+    connect(ui.sp_l2gradient,SIGNAL(valueChanged(int)),this,SLOT(ValueChange()));
+    connect(ui.dsp_delta,SIGNAL(valueChanged(double)),this,SLOT(ValueChange()));
+    connect(ui.dsp_scale,SIGNAL(valueChanged(double)),this,SLOT(ValueChange()));
+
+    connect(ui.pb_ok,SIGNAL(clicked(bool)),this,SLOT(PushOk()));
+    connect(ui.pb_cancel,SIGNAL(clicked(bool)),this,SLOT(PushCancel()));
 }
 
 QEdgeDetectionPanel::~QEdgeDetectionPanel()

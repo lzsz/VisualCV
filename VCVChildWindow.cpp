@@ -36,6 +36,8 @@ QVCVChildWindow::QVCVChildWindow(QWidget *parent, Qt::WindowFlags f)
     threshold_command = NULL;
     morphology_panel = NULL;
     morphology_command = NULL;
+    edgedetection_panel = NULL;
+    edgedetection_command = NULL;
 
     connect(v_scrollbar,SIGNAL(valueChanged(int)),this,SLOT(repaint()));
     connect(h_scrollbar,SIGNAL(valueChanged(int)),this,SLOT(repaint()));
@@ -183,6 +185,8 @@ QEdgeDetectionPanel* QVCVChildWindow::GetEdgeDetectionPanel(VCV_IMAGE_OPERATION 
         connect(edgedetection_panel,SIGNAL(PanelCancel(const CommandParameter*)),this,SLOT(EdgeDetectionPanelCancel(const CommandParameter*)));
     }
 
+    DoOperation(edgedetection_panel,(QVCVUndoCommand**)&edgedetection_command,operation);
+
     return edgedetection_panel;
 }
 
@@ -288,17 +292,17 @@ void QVCVChildWindow::MorphologyPanelCancel(const CommandParameter *para)
 
 void QVCVChildWindow::EdgeDetectionParameterChange(const CommandParameter *para)
 {
-
+    PanelValueChange((QVCVUndoCommand*)edgedetection_command,para);
 }
 
 void QVCVChildWindow::EdgeDetectionPanelOk(const CommandParameter *para)
 {
-
+    PanelOk((QVCVUndoCommand**)&edgedetection_command,para);
 }
 
 void QVCVChildWindow::EdgeDetectionPanelCancel(const CommandParameter *para)
 {
-
+    PanelCencel((QVCVUndoCommand**)&edgedetection_command,para);
 }
 
 void QVCVChildWindow::VScrollBarRangeChanged(int min, int max)

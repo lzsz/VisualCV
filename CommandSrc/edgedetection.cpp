@@ -45,7 +45,7 @@ void QLaplaction::redo()
     final_image.release();
     final_image.create(original_image.rows,original_image.cols,original_image.type());
 
-    Laplacian(original_image,final_image,ddepth,ksize,scale,delta,bordertype);
+    Laplacian(original_image,final_image,CV_8UC1,ksize,scale,delta,bordertype);
 
     connection_data->SetDisplayImage(final_image);
 }
@@ -80,10 +80,23 @@ bool QSobel::SetParameter(const CommandParameter *para)
 
 void QSobel::redo()
 {
-   if(!initialization)
-       return;
+    if(!initialization)
+        return;
 
-   connection_data->SetDisplayImage(original_image);
+    final_image.release();
+    final_image.create(original_image.rows,original_image.cols,original_image.type());
+
+    Mat grad_x,grad_y;
+
+    Sobel(original_image,grad_x,CV_16S,1,0,ksize,scale,delta,bordertype);
+    Sobel(original_image,grad_y,CV_16S,0,1,ksize,scale,delta,bordertype);
+
+    convertScaleAbs(grad_x,grad_x);
+    convertScaleAbs(grad_y,grad_y);
+
+    addWeighted(grad_x,0.5,grad_y,0.5,0,final_image);
+
+    connection_data->SetDisplayImage(final_image);
 }
 
 void QSobel::undo()
@@ -91,12 +104,7 @@ void QSobel::undo()
     if(!initialization)
         return;
 
-    final_image.release();
-    final_image.create(original_image.rows,original_image.cols,original_image.type());
-
-    Sobel(original_image,final_image,ddepth,dx,dy,ksize,scale,delta,bordertype);
-
-    connection_data->SetDisplayImage(final_image);
+    connection_data->SetDisplayImage(original_image);
 }
 
 
